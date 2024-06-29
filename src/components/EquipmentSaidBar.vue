@@ -1,29 +1,18 @@
 <template>
-    <div class="container pt-1 mt-16">
-        <div class="flex">
-            <EquipmentSideBar />
-            <div class="w-3/4 p-6 bg-white">
-                <div class="grid grid-cols-2 gap-4">
-                    <EquipmentCard v-for="equipment in equipments" :key="equipment.id" :equipment="equipment" />
-                </div>
-            </div>
-        </div>
+    <div class="w-1/4 bg-gray-700 mt-16 p-1">
+        <ul class="flex flex-col space-y-4 text-lg font-bold text-white">
+            <li>
+                <router-link class="custom-link" to="/AddEquipment">Add Equipment</router-link>
+            </li>
+            <li>
+                <router-link class="custom-link" to="/Equipments">Lessor Equipments</router-link>
+            </li>
+            <li>
+                <router-link class="custom-link" to="/Equipments-Rented">Lessor Equipments Rented</router-link>
+            </li>
+            <li>
+                <router-link class="custom-link" to="/LessorOrder">Lessee Orders</router-link>
+            </li>
+        </ul>
     </div>
 </template>
-
-<script setup>
-import { ref } from 'vue';
-import EquipmentSideBar from '@/components/EquipmentSaidBar.vue';
-import EquipmentCard from '@/components/EquipmentCard.vue';
-
-const equipments = ref([
-    { id: 1, name: 'EQUIPMENT 1', image: 'src/assets/images/NewFolder/WhatsApp Image 2024-06-22 at 16.03.42_16147654.jpg' },
-    { id: 2, name: 'EQUIPMENT 2', image: 'src/assets/images/NewFolder/WhatsApp Image 2024-06-22 at 16.03.42_16147654.jpg' },
-    { id: 3, name: 'EQUIPMENT 3', image: 'src/assets/images/NewFolder/WhatsApp Image 2024-06-22 at 16.03.42_16147654.jpg' },
-    { id: 4, name: 'EQUIPMENT 4', image: 'src/assets/images/NewFolder/WhatsApp Image 2024-06-22 at 16.03.42_16147654.jpg' },
-]);
-</script>
-
-<style scoped>
-@import url('@/assets/AddEquipment.css');
-</style>
