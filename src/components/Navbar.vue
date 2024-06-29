@@ -1,7 +1,8 @@
 <template>
     <header>
-        <nav class="bg-gray-800 fixed w-full z-10 top-0 py-2 shadow-md">
-            <div class="container mx-auto flex items-center justify-between  p-4">
+        <nav :class="{ 'bg-transparent': isTransparent, 'bg-gray-800': !isTransparent }"
+            class="fixed w-full z-10 top-0 py-2 shadow-md transition-colors duration-300">
+            <div class="container mx-auto flex items-center justify-between p-4">
                 <router-link class="text-white text-lg font-semibold" to="/">
                     <i class="fa-solid fa-truck-monster mr-2"></i> RentTech
                 </router-link>
@@ -24,7 +25,7 @@
                                 advertise</router-link>
                         </li>
                         <li class="relative nav-item dropdown">
-                            <button class="text-white  px-4 hover:bg-gray-700 rounded inline-flex items-center"
+                            <button class="text-white px-4 hover:bg-gray-700 rounded inline-flex items-center"
                                 @click="toggleDropdown">
                                 <span>Category</span>
                                 <svg class="fill-current h-4 w-4 ml-2" xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +34,7 @@
                                 </svg>
                             </button>
                             <ul :class="{ 'hidden': !isDropdownOpen, 'block': isDropdownOpen }"
-                                class="absolute bg-white text-black  rounded shadow-lg">
+                                class="absolute bg-white text-black rounded shadow-lg">
                                 <li><router-link class="block px-4 py-2 hover:bg-gray-200"
                                         to="/AllEquipment">Agriculture</router-link></li>
                                 <li><a class="block px-4 py-2 hover:bg-gray-200" href="#">Industrial</a></li>
@@ -51,8 +52,8 @@
                             <router-link class="text-white py-2 px-4 hover:bg-gray-700 rounded" to="/Equipments"><i
                                     class="fa-regular fa-user mr-2"></i>Profile</router-link>
                         </li>
-                        <li class="relative  dropdown">
-                            <button class="text-white  px-4 hover:bg-gray-700 rounded inline-flex items-center"
+                        <li class="relative dropdown">
+                            <button class="text-white px-4 hover:bg-gray-700 rounded inline-flex items-center"
                                 @click="toggleRegisterDropdown">
                                 <span>Register</span>
                                 <svg class="fill-current h-4 w-4 ml-2" xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +83,9 @@
 
 <script setup>
 import { ref } from 'vue';
-
+defineProps({
+    isTransparent: Boolean
+});
 const isNavbarOpen = ref(false);
 const isDropdownOpen = ref(false);
 const isRegisterDropdownOpen = ref(false);
@@ -104,4 +107,13 @@ const toggleRegisterDropdown = () => {
 .cursor-not-allowed {
     cursor: not-allowed;
 }
+
+/* .bg-transparent {
+    background-color: transparent;
+}
+
+.bg-gray-800 {
+    background-color: #2d3748;
+    Example color */
+/* } */
 </style>

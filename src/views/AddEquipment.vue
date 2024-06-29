@@ -1,5 +1,5 @@
 <template>
-    <div class="container  mt-5">
+    <div class="container  pt-1 mt-16">
         <div class="flex">
             <Equipment-saidBar />
             <div class="w-3/4 p-6 bg-white">

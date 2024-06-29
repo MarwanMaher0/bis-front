@@ -2,9 +2,8 @@
     <div class="bg-white">
         <!-- Carousel -->
         <div class="relative">
-            <swiper :slides-per-view="1" :loop="true" class="relative h-96 overflow-hidden rounded-lg">
+            <swiper :slides-per-view="1" :loop="true" class="relative max-h-screen overflow-hidden">
                 <swiper-slide>
-                    <!-- Replace the invalid import path with a valid one -->
                     <img :src="validImage" class="object-cover w-full h-full" alt="Top Rated Equipment" />
                     <div
                         class="absolute inset-0 flex flex-col items-center justify-center text-center text-white bg-black bg-opacity-50">
@@ -32,6 +31,7 @@
                     </div>
                 </swiper-slide>
             </swiper>
+
             <div class="absolute inset-x-0 bottom-0 flex justify-center space-x-3">
                 <button :class="activeSlide === 0 ? 'bg-white' : 'bg-gray-300'" class="w-3 h-3 rounded-full"
                     @click="setSlide(0)"></button>
@@ -61,7 +61,7 @@
         </div>
 
         <!-- Popular Equipment -->
-        <div class="bg-gray-800 py-12">
+        <!-- <div class="bg-gray-800 py-12">
             <h1 class="text-center text-white text-3xl mb-8">Popular Equipment</h1>
             <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-white rounded-lg overflow-hidden shadow-lg">
@@ -94,10 +94,12 @@
                     <button class="px-6 py-3 bg-yellow-500 rounded">SEE ALL EQUIPMENT</button>
                 </router-link>
             </div>
-        </div>
+        </div> -->
+        <PopularEquipment />
+
 
         <!-- Trusted Companies -->
-        <section class="bg-gray-100 py-12">
+        <!-- <section class="bg-gray-100 py-12">
             <div class="container mx-auto text-center">
                 <h2 class="text-yellow-500 text-sm">Our Trusted Partner</h2>
                 <h1 class="text-3xl font-bold text-gray-800 mb-8">Our Trusted Companies</h1>
@@ -109,7 +111,8 @@
                     <img :src="pic5" class="h-20" alt="Trusted Company 5" />
                 </div>
             </div>
-        </section>
+        </section> -->
+        <TrustedCompanies />
     </div>
 </template>
 
@@ -128,6 +131,9 @@ import pic2 from '@/assets/images/TrustCompany/pic2.jpg';
 import pic3 from '@/assets/images/TrustCompany/pic3.jpg';
 import pic4 from '@/assets/images/TrustCompany/pic4.jpg';
 import pic5 from '@/assets/images/TrustCompany/picc5.jpg';
+import PopularEquipment from '@/components/PopularEquipment.vue';
+import TrustedCompanies from '@/components/TrustedCompanies.vue';
+
 
 
 const activeSlide = ref(0);
