@@ -1,11 +1,11 @@
 <template>
     <header>
-        <nav :class="{ 'bg-transparent': isTransparent, 'bg-gray-800': !isTransparent }"
+        <nav :class="{ 'bg-transparent': isTransparent, 'bg-black': !isTransparent }"
             class="fixed w-full z-50 top-0 py-2 shadow-md transition-colors duration-300">
             <div class="container mx-auto flex items-center justify-between ">
                 <router-link class="text-white text-lg font-semibold" to="/">
-                    <i class="fa-solid fa-truck-monster "></i> <img src="@/assets/images/Logo2.png" class="w-[170px]"
-                        alt="logo" srcset="">
+                    <i class="fa-solid fa-truck-monster"></i>
+                    <img src="@/assets/images/Logo2.png" class="w-[170px]" alt="logo">
                 </router-link>
                 <button class="text-white lg:hidden focus:outline-none" @click="toggleNavbar">
                     <i class="fa-solid fa-list"></i>
@@ -14,16 +14,16 @@
                     class="w-full lg:w-auto">
                     <ul class="flex flex-col lg:flex-row lg:space-x-4 mt-4 lg:mt-0">
                         <li class="nav-item">
-                            <router-link class="text-white py-2 px-4 hover:bg-gray-700 rounded"
-                                to="/">Home</router-link>
+                            <router-link class="text-white py-2 px-4 hover:bg-gray-700 rounded" to="/"
+                                exact-active-class="text-yellow-500">Home</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="text-white py-2 px-4 hover:bg-gray-700 rounded" to="/AllEquipment">Shop
-                                online</router-link>
+                            <router-link class="text-white py-2 px-4 hover:bg-gray-700 rounded" to="/AllEquipment"
+                                exact-active-class="text-yellow-500">Shop online</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="text-white py-2 px-4 hover:bg-gray-700 rounded" to="/AddEquipment">Add
-                                advertise</router-link>
+                            <router-link class="text-white py-2 px-4 hover:bg-gray-700 rounded" to="/AddEquipment"
+                                exact-active-class="text-yellow-500">Add advertise</router-link>
                         </li>
                         <li class="relative nav-item dropdown">
                             <button class="text-white px-4 hover:bg-gray-700 rounded inline-flex items-center"
@@ -50,12 +50,14 @@
                     </ul>
                     <ul class="flex flex-col lg:flex-row lg:space-x-4 mt-4 lg:mt-0">
                         <li class="nav-item">
-                            <router-link class="text-white py-2 px-4 hover:bg-gray-700 rounded" to="/Equipments"><i
+                            <router-link class="text-white py-2 px-4 hover:bg-gray-700 rounded" to="/Equipments"
+                                exact-active-class="text-yellow-500"><i
                                     class="fa-regular fa-user mr-2"></i>Profile</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="text-white py-2 px-4 hover:bg-gray-700 rounded" to="/cart"><i
-                                    class="fa-regular fa-user mr-2"></i>cart</router-link>
+                            <router-link class="text-white py-2 px-4 hover:bg-gray-700 rounded" to="/cart"
+                                exact-active-class="text-yellow-500"><i
+                                    class="fa-regular fa-user mr-2"></i>Cart</router-link>
                         </li>
                         <li class="relative dropdown">
                             <button class="text-white px-4 hover:bg-gray-700 rounded inline-flex items-center"
@@ -88,9 +90,11 @@
 
 <script setup>
 import { ref } from 'vue';
+
 defineProps({
     isTransparent: Boolean
 });
+
 const isNavbarOpen = ref(false);
 const isDropdownOpen = ref(false);
 const isRegisterDropdownOpen = ref(false);
@@ -112,13 +116,4 @@ const toggleRegisterDropdown = () => {
 .cursor-not-allowed {
     cursor: not-allowed;
 }
-
-/* .bg-transparent {
-    background-color: transparent;
-}
-
-.bg-gray-800 {
-    background-color: #2d3748;
-    Example color */
-/* } */
 </style>
