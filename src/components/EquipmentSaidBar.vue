@@ -1,5 +1,5 @@
 <template>
-    <div class="w-1/4 bg-[#646752] mt-2 p-1">
+    <div class="w-1/4 bg-[#646752]  mt-2 p-1">
         <ul class="flex flex-col space-y-4 text-lg font-bold text-white">
             <li>
                 <router-link class="custom-link" to="/AddEquipment" active-class="active-link">Add

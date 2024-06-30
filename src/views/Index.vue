@@ -2,7 +2,8 @@
     <div class="bg-white">
         <!-- Carousel -->
         <div class="relative">
-            <swiper :slides-per-view="1" :loop="true" class="relative max-h-screen overflow-hidden">
+            <swiper :loop="true" :slides-per-view="1" :autoplay="{ delay: 200 }"
+                class="relative max-h-screen overflow-hidden">
                 <swiper-slide>
                     <img :src="validImage" class="object-cover w-full h-full" alt="Top Rated Equipment" />
                     <div
@@ -120,6 +121,7 @@
 import { ref } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
+// import { Navigation, Autoplay } from 'swiper';
 import validImage from '@/assets/images/homepage/istockphoto-1387256339-1024x1024.webp';
 import twoEquipment from '@/assets/images/homepage/twoEqipment.jpg';
 import plasticInjection from '@/assets/images/homepage/plastic-injection-molding-factory-generative-ai_547471-983.jpg';
@@ -134,6 +136,7 @@ import pic5 from '@/assets/images/TrustCompany/picc5.jpg';
 import PopularEquipment from '@/components/PopularEquipment.vue';
 import TrustedCompanies from '@/components/TrustedCompanies.vue';
 
+// SwiperCore.use([Navigation, Autoplay]);
 
 
 const activeSlide = ref(0);

@@ -55,9 +55,10 @@
                                     class="fa-regular fa-user mr-2"></i>Profile</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="text-white py-2 px-4 hover:bg-gray-700 rounded" to="/cart"
-                                exact-active-class="text-yellow-500"><i
-                                    class="fa-regular fa-user mr-2"></i>Cart</router-link>
+                            <router-link class="text-white flex  px-2 hover:bg-gray-700 rounded" to="/cart"
+                                exact-active-class="text-yellow-500">
+                                <IconShoppingCart /> Cart
+                            </router-link>
                         </li>
                         <li class="relative dropdown">
                             <button class="text-white px-4 hover:bg-gray-700 rounded inline-flex items-center"
@@ -90,6 +91,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import IconShoppingCart from '@/components/icons/icon-shopping-cart.vue';
 
 defineProps({
     isTransparent: Boolean

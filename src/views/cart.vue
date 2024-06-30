@@ -1,6 +1,6 @@
 <template>
     <div class="flex items-center justify-center min-h-screen bg-gray-100">
-        <div class="w-full max-w-4xl p-4 bg-white rounded-lg shadow-lg">
+        <div class="w-full max-w-7xl p-4 bg-white rounded-lg shadow-lg">
             <!-- Shopping Cart -->
             <div class="cart">
                 <h2 class="text-2xl font-bold mb-4">Shopping Cart</h2>
@@ -9,7 +9,9 @@
                         <tr>
                             <th class="p-4 rounded-tl-2xl">Product</th>
                             <th class="p-4">Price</th>
-                            <th class="p-4 text-center rounded-tr-2xl">Remove</th>
+                            <th class="p-4 text-center rounded-tr-2xl">
+                                Remove
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -144,7 +146,9 @@
                     <div class="space-y-4">
                         <div v-for="(item, index) in cartItems" :key="index" class="flex justify-between items-center">
                             <input type="text" class="w-1/2 p-2 border rounded" :value="item.name" readonly>
-                            <button class="text-red-600 hover:underline" @click="removeItem(item.id)">Remove</button>
+                            <button class="text-red-600 hover:underline" @click="removeItem(item.id)">
+                                <IconTrash />
+                            </button>
                             <button class="text-green-600 hover:underline">+</button>
                         </div>
                     </div>
@@ -180,6 +184,8 @@ import closeIcon from '@/components/icons/closeIcon.vue';
 import image1 from '@/assets/images/popular-equipment/16666.jpg';
 import image2 from '@/assets/images/popular-equipment/argculture.jpg';
 import image3 from '@/assets/images/popular-equipment/container.jpg';
+import IconTrash from '@/components/icons/icon-trash.vue';
+
 
 const showModal = ref(false);
 const currentStep = ref('FirstPage');

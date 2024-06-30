@@ -34,7 +34,7 @@ watch(route, () => {
   <div>
 
     <Navbar :isTransparent="isTransparent" />
-    <div>
+    <div class="min-h-screen">
       <RouterView />
     </div>
     <FooterComponent />
