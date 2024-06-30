@@ -39,6 +39,7 @@
 <script setup>
 import { ref } from 'vue';
 import EquipmentSideBar from '@/components/EquipmentSaidBar.vue';
+import closeIcon from '@/assets/icons/closeIcon.vue';
 import EquipmentCard from '@/components/EquipmentCard.vue';
 import WhatsAppimg from '@/assets/images/NewFolder/WhatsApp Image 2024-06-22 at 16.03.42_16147654.jpg';
 import image1 from '@/assets/images/popular-equipment/16666.jpg';
