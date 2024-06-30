@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 h-screen pt-36 bg-[#646752] text-white">
+    <div class="py-4 h-screen pt-36 bg-[#646752] text-white">
         <h1 class="text-4xl mt-5 py-6 text-center text-antiquewhite">Equipment Description Details</h1>
         <div class=" flex flex-col items-center">
             <div class="inline-block">
@@ -22,9 +22,12 @@
                         </swiper>
                     </div>
                     <div class="w-full h-full md:w-1/2 p-12 flex flex-col justify-center bg-[#f3e3cf] text-black">
-                        <h3 class="text-2xl mb-4 font-bold">Description</h3>
-                        <p class="mb-4">Renting a wheel loader provides businesses with the flexibility to access and
+                        <h3 class="text-3xl mb-4 font-bold">Description</h3>
+                        <p class="mb-4 text-xl">Renting a wheel loader provides businesses with the flexibility to
+                            access and
                             utilize this powerful construction machine.</p>
+                        <br>
+                        <br>
                         <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
                         <div class="grid grid-cols-2 space-y-2 mb-4">
@@ -34,7 +37,10 @@
                             <p>Width: 2.2m</p>
                         </div>
                         <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-
+                        <br>
+                        <br>
+                        <br>
+                        <br>
 
                         <div class="mt-4 flex justify-between items-center">
                             <router-link to="/cart"
