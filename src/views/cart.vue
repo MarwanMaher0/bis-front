@@ -177,13 +177,16 @@
 <script setup>
 import { ref } from 'vue';
 import closeIcon from '@/components/icons/closeIcon.vue';
+import image1 from '@/assets/images/popular-equipment/16666.jpg';
+import image2 from '@/assets/images/popular-equipment/argculture.jpg';
+import image3 from '@/assets/images/popular-equipment/container.jpg';
 
 const showModal = ref(false);
 const currentStep = ref('FirstPage');
 const cartItems = ref([
-    { id: 1, name: 'Mighty Mover', price: '£44.00', image: 'src/assets/images/popular-equipment/16666.jpg' },
-    { id: 2, name: 'Robust Earthmover', price: '£249.00', image: 'src/assets/images/popular-equipment/argculture.jpg' },
-    { id: 3, name: 'Robust Load', price: '£119.99', image: 'src/assets/images/popular-equipment/container.jpg' }
+    { id: 1, name: 'Mighty Mover', price: '£44.00', image: image1 },
+    { id: 2, name: 'Robust Earthmover', price: '£249.00', image: image2 },
+    { id: 3, name: 'Robust Load', price: '£119.99', image: image3 }
 ]);
 const shippingInfo = ref({
     email: '',

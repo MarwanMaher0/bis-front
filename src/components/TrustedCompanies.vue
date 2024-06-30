@@ -1,7 +1,7 @@
 <template>
   <section class="flex flex-col justify-center items-center bg-gray-100 min-h-screen">
     <div
-      class="bg-[#646852] rounded-3xl w-4/5 max-w-full h-24 mx-10 my-6 text-center py-20 px-0 border-2 border-black relative z-10">
+      class="bg-[#646852] rounded-3xl  max-w-full h-24 mx-10 my-6 text-center py-20 px-0 border-2 border-black relative z-10">
       <h2 class="text-xs text-yellow-500 mt-[-4.3rem]">Our Trusted Partner</h2>
       <h1 class="text-xl text-white font-bold leading-none">Our Trusted Companies</h1>
     </div>
