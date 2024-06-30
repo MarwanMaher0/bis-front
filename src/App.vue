@@ -31,11 +31,14 @@ watch(route, () => {
 </script>
 
 <template>
-  <Navbar :isTransparent="isTransparent" />
   <div>
-    <RouterView />
+
+    <Navbar :isTransparent="isTransparent" />
+    <div>
+      <RouterView />
+    </div>
+    <FooterComponent />
   </div>
-  <FooterComponent />
 </template>
 
 <style scoped></style>

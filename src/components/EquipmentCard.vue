@@ -1,6 +1,6 @@
 <template>
     <div class="border p-4 rounded-lg shadow-md">
-        <h2 class="bg-green-700 text-white p-2 text-center rounded-t-lg">{{ equipment.name }}</h2>
+        <h2 class="bg-yellow-600 text-white p-2 text-center rounded-t-lg">{{ equipment.name }}</h2>
         <div class="mt-4 flex flex-col items-center">
             <img :src="equipment.image" alt="Equipment Image" class="w-full h-48 object-cover mb-4 rounded-lg" />
             <div class="flex gap-5">

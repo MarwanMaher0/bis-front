@@ -1,10 +1,11 @@
 <template>
     <header>
         <nav :class="{ 'bg-transparent': isTransparent, 'bg-gray-800': !isTransparent }"
-            class="fixed w-full z-10 top-0 py-2 shadow-md transition-colors duration-300">
-            <div class="container mx-auto flex items-center justify-between p-4">
+            class="fixed w-full z-50 top-0 py-2 shadow-md transition-colors duration-300">
+            <div class="container mx-auto flex items-center justify-between ">
                 <router-link class="text-white text-lg font-semibold" to="/">
-                    <i class="fa-solid fa-truck-monster mr-2"></i> RentTech
+                    <i class="fa-solid fa-truck-monster "></i> <img src="@/assets/images/Logo2.png" class="w-[170px]"
+                        alt="logo" srcset="">
                 </router-link>
                 <button class="text-white lg:hidden focus:outline-none" @click="toggleNavbar">
                     <i class="fa-solid fa-list"></i>
@@ -52,6 +53,10 @@
                             <router-link class="text-white py-2 px-4 hover:bg-gray-700 rounded" to="/Equipments"><i
                                     class="fa-regular fa-user mr-2"></i>Profile</router-link>
                         </li>
+                        <li class="nav-item">
+                            <router-link class="text-white py-2 px-4 hover:bg-gray-700 rounded" to="/cart"><i
+                                    class="fa-regular fa-user mr-2"></i>cart</router-link>
+                        </li>
                         <li class="relative dropdown">
                             <button class="text-white px-4 hover:bg-gray-700 rounded inline-flex items-center"
                                 @click="toggleRegisterDropdown">
@@ -65,9 +70,9 @@
                                 class="absolute bg-white text-black pt-1 mt-1 rounded shadow-lg">
                                 <li><router-link class="block px-4 py-2 hover:bg-gray-200"
                                         to="/Login">Login</router-link></li>
-                                <li><a class="block px-4 py-2 hover:bg-gray-200" href="#">Log out</a></li>
                                 <li><router-link class="block px-4 py-2 hover:bg-gray-200" to="/SignUp">Sign
                                         up</router-link></li>
+                                <li><a class="block px-4 py-2 hover:bg-gray-200" href="#">Log out</a></li>
                                 <li>
                                     <hr class="border-gray-300">
                                 </li>

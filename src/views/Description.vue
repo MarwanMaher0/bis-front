@@ -28,19 +28,25 @@
                             <p>Width: 2.2m</p>
                         </div>
                         <div class="mt-4 flex justify-between items-center">
-                            <button class="bg-yellow-500 text-black py-2 px-4 rounded" @click="addToCart">ADD TO
-                                CART</button>
+                            <router-link to="/cart" class="bg-yellow-500 text-black py-2 px-4 rounded"
+                                @click="addToCart">ADD TO
+                                CART</router-link>
                             <p class="text-xl">$375 per day</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <!-- 
         <div v-if="showModal" class="fixed inset-0 bg-black   bg-opacity-50 flex z-50 items-center justify-center">
 
             <div class="bg-gray-700 p-8 text-black  rounded-lg w-1/2" v-if="currentStep === 'FirstPage'">
-
+                <button @click="closeModal()" class="">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4" viewBox="0 0 384 512">
+                        <path
+                            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+                    </svg>
+                </button>
                 <h3 class="text-xl mb-4 text-center">Shipping Information</h3>
                 <div class="flex flex-col space-y-4">
                     <input type="email" class="form-control p-2 rounded" placeholder="Lessee Email"
@@ -74,8 +80,14 @@
             </div>
 
             <div class="bg-gray-700 p-8 text-black rounded-lg w-1/2" v-if="currentStep === 'SecondPage'">
-                <i class="closeIcon fa-solid fa-xmark fa-3x d-flex justify-content-end w-100 text-white"
-                    @click="closeModal"></i>
+
+
+                <button @click="closeModal()" class="">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4" viewBox="0 0 384 512">
+                        <path
+                            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+                    </svg>
+                </button>
                 <h3 class="text-xl mb-4 text-center">Select Delivery Service</h3>
                 <div class="flex flex-col space-y-4">
                     <label class="text-light">Delivery Type</label>
@@ -105,8 +117,12 @@
             </div>
 
             <div class="bg-gray-700 p-8 rounded-lg w-1/2" v-if="currentStep === 'ThirdPage'">
-                <i class="closeIcon fa-solid fa-xmark fa-3x d-flex justify-content-end w-100 text-white"
-                    @click="closeModal"></i>
+                <button @click="closeModal()" class="">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4" viewBox="0 0 384 512">
+                        <path
+                            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+                    </svg>
+                </button>
                 <h3 class="text-xl mb-4 text-center">Your Reservation</h3>
                 <div class="card">
                     <div class="card-body">
@@ -174,7 +190,7 @@
                         @click="finishReservation">Finish</button>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 

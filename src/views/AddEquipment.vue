@@ -1,8 +1,8 @@
 <template>
-    <div class="container  pt-1 mt-16">
+    <div class="container  pt-2 mt-24">
         <div class="flex">
-            <Equipment-saidBar />
-            <div class="w-3/4 p-6 bg-white">
+            <Equipment-saidBar class=" p-4 pt-8" />
+            <div class=" w-3/4 p-6 bg-white">
                 <form @submit.prevent="submitForm" class="w-3/4 mx-auto">
                     <div class="p-6 border-2 border-gray-200 shadow-lg">
                         <h1 class="bg-yellow-400 p-2 text-lg font-bold">Add New Equipment</h1>

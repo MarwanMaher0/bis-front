@@ -1,7 +1,7 @@
 <template>
-    <div class="container pt-1 mt-16">
+    <div class="container  pt-2 mt-24">
         <div class="flex">
-            <EquipmentSideBar />
+            <EquipmentSideBar class=" p-4 pt-8" />
             <div class="w-3/4 p-6 bg-white">
                 <div class="grid grid-cols-2 gap-4">
                     <EquipmentCard v-for="equipment in equipments" :key="equipment.id" :equipment="equipment" />

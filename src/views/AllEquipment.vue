@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-[#f8f0e5] p-10 mt-14">
+    <div class="bg-[#f8f0e5] p-10   pt-32">
         <div class="">
             <!-- Equipment Items -->
             <div class="grid grid-cols-3 gap-10">
