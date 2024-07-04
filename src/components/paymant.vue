@@ -1,73 +1,108 @@
 <template>
-    <div class="bg-olive-500 p-6 rounded-lg w-96 mx-auto relative">
-        <button class="absolute top-2 right-2 text-white" @click="closeOrder">X</button>
-        <h2 class="text-white text-xl">Your Order</h2>
-        <div class="mt-4">
-            <div class="flex justify-between text-white">
-                <span>Digging Dynamo</span>
-                <span>$700</span>
+    <div class="bg-white relative p-8 rounded-lg w-full max-w-lg text-black">
+        <button @click="closeModal" class="absolute top-4 right-4 text-black hover:text-gray-600">
+            <closeIcon />
+        </button>
+        <h3 class="text-xl mb-4 text-center">Payment Method</h3>
+        <div class="flex flex-col space-y-4">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="Cash" value="Cash"
+                    v-model="paymentMethod">
+                <label class="form-check-label" for="Cash">Cash</label>
             </div>
-            <div class="flex justify-between text-white mt-2">
-                <span>Subtotal</span>
-                <span>$700</span>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="CreditCard" value="CreditCard"
+                    v-model="paymentMethod">
+                <label class="form-check-label" for="CreditCard">Credit Card</label>
             </div>
-            <div class="flex justify-between text-white mt-2">
-                <span>Total</span>
-                <span>$700</span>
-            </div>
-        </div>
-        <div class="mt-6">
-            <h3 class="text-white text-lg">Payment Method</h3>
-            <div class="mt-2">
-                <input type="radio" id="payOnSite" value="pay-on-site" v-model="selectedPayment">
-                <label for="payOnSite" class="text-white ml-2">Pay on-site</label>
-            </div>
-            <div class="mt-2">
-                <input type="radio" id="bankTransfer" value="bank-transfer" v-model="selectedPayment">
-                <label for="bankTransfer" class="text-white ml-2">Direct bank transfer</label>
-            </div>
-            <div class="mt-2">
-                <input type="radio" id="creditCard" value="credit-card" v-model="selectedPayment">
-                <label for="creditCard" class="text-white ml-2">Credit card (Stripe)</label>
-                <div v-if="selectedPayment === 'credit-card'" class="mt-2 text-white text-sm">
-                    <p>Pay with your credit card via Stripe. Use the card number 4242424242424242 with CVC 123, a valid
-                        expiration
-                        date and random 5-digit ZIP-code to test a payment.</p>
+            <div class="CerditInfo p-3" v-if="paymentMethod === 'CreditCard'">
+                <div class="card-body">
+                    <div class="input-group">
+                        <span class="input-group-text">Card Number</span>
+                        <input type="text" class="form-control" placeholder="Card Number"
+                            v-model="creditCardInfo.number">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text">Expiry Date</span>
+                        <input type="text" class="form-control" placeholder="MM/YY" v-model="creditCardInfo.expiry">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text">CVV</span>
+                        <input type="text" class="form-control" placeholder="CVV" v-model="creditCardInfo.cvv">
+                    </div>
                 </div>
             </div>
-            <div class="mt-2">
-                <input type="radio" id="paypal" value="paypal" v-model="selectedPayment">
-                <label for="paypal" class="text-white ml-2">Pay by PayPal</label>
-            </div>
         </div>
-        <div class="flex justify-between mt-6">
-            <button class="bg-white text-olive-500 px-4 py-2 rounded" @click="reserveOrder">Reserve</button>
-            <button class="bg-gray-300 text-gray-800 px-4 py-2 rounded" @click="goBack">Back</button>
+        <div class="mt-4 flex justify-between space-x-4">
+            <button @click="previousStep"
+                class="px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-400">Back</button>
+            <button @click="PostPay" class="px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-400">Pay</button>
         </div>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { defineProps, defineEmits } from 'vue';
+import { onMounted } from 'vue';
+import axios from 'axios';
 
-const selectedPayment = ref('pay-on-site');
+const props = defineProps({
+    cartItems: Array,
+});
 
-const closeOrder = () => {
-    // Handle closing the order
+const emit = defineEmits(['close', 'previous', 'next', 'finish']);
+
+const paymentMethod = ref('');
+const creditCardInfo = ref({
+    number: '',
+    expiry: '',
+    cvv: ''
+});
+
+const closeModal = () => {
+    emit('close');
 };
 
-const reserveOrder = () => {
-    // Handle reserving the order
+const previousStep = () => {
+    emit('previous');
 };
 
-const goBack = () => {
-    // Handle going back to the previous step
+const nextStep = () => {
+    emit('next');
 };
+
+const id = ref(null);
+
+const PostPay = async () => {
+    try {
+        const response = await axios.post('/api/Payment/LesseePayForUser', {
+            cardNumber: creditCardInfo.value.number,
+            cvc: creditCardInfo.value.cvv,
+            mmyy: creditCardInfo.value.expiry,
+            orderId: id.value
+        });
+        console.log('Payment successful:', response.data);
+        emit('finish', response.data); // Emit finish event with response data
+    } catch (error) {
+        console.error('Payment failed:', error);
+    }
+};
+
+const fetchOrders = async () => {
+    try {
+        const response = await axios.get('/api/Orders');
+        if (response.data.length > 0) {
+            id.value = response.data[0].id; // Get the first order's ID
+        } else {
+            console.error('No orders found');
+        }
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+    }
+};
+
+onMounted(() => {
+    fetchOrders();
+});
 </script>
-
-<style>
-/* Add any additional styles if needed */
-.bg-olive-500 {
-    background-color: #6d6d46;
-}
-</style>

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/ShoppingCards.css" />
+    <title>Document</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            margin: 0;
+            font-size: 18px;
+        }
+
+
+        .shopping-cart {
+            width: 95%;
+            height: 90vh;
+            margin: 20px auto;
+            background: #FFFFFF;
+            box-shadow: 2px 4px 6px 0px rgba(0,0,0,0.10);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title {
+            height: 80px;
+            border-bottom: 1px solid #E1E8EE;
+            padding: 20px 30px;
+            color: black;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            vertical-align: middle;
+        }
+
+        .delete-icon {
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .continue-shopping {
+            color: #337ab7;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        .make-order {
+            color: #337ab7;
+            font-size: 20px;
+            text-decoration: none;
+        }
+      /*  ------------------------------------------------------------------------ FirstPageOrder--------------------------------------------------------- */
+        .lightbox-Container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: rgb(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+
+        .lightbox-Items {
+            width: 40%;
+            height: 80%;
+            background-color: #646852;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000000;
+        }
+
+      
+       
+        .w-50 {
+            width: 65% !important;
+        }
+
+        .Information {
+            width: 65% !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            gap:3px;
+            align-items: center;
+            align-content: space-around;
+            height: 85%;
+        }
+
+
+
+        #Nextbtn {
+            height: 40px;
+            width: 150px;
+            margin: 5px;
+            background-color: transparent;
+        }
+
+        #Backbtn {
+            height: 40px;
+            width: 150px;
+            margin: 5px;
+            background-color: transparent;
+        }
+
+        .quantity-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-button {
+            background-color: white;
+            color: #646852;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+            .quantity-button:hover {
+                background-color: #646852;
+            }
+
+        .closeIcon {
+            cursor: pointer;
+        }
+
+        h3 {
+            color: white;
+        }
+     /* --------------------------------------------------------------------------------   ReservationPage--------------------------------------------------------------- */
+        .card {
+            background-color: #F0EDE3;
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            color: #333333;
+        }
+
+        .card-body {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-details {
+            flex-grow: 1;
+        }
+
+            .item-details input {
+                border: none;
+                /*  background-color: transparent; */
+                color: #333333;
+                font-weight: bold;
+            }
+
+        .btn {
+            background-color: transparent;
+            cursor: pointer;
+            color: white;
+        }
+
+            .btn:hover {
+                background-color: gold !important;
+                color: white;
+            }
+
+
+
+        .btn-outline-danger .fa-trash,
+        .btn-outline-success .fa-plus {
+            color: #333333;
+        }
+
+        .total-section {
+            width: 40%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-radius: 10px;
+            color: #ffffff;
+        }
+
+            .total-section h5 {
+                margin: 0;
+            }
+
+        .custom-hr {
+            width: 40%;
+            border: 1px solid #F0EDE3;
+            opacity: 1;
+        }
+      /* -------------------------------------------------------------------------------------  calenderPage -------------------------------------------------------------------*/
+        .calendar {
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: gold;
+            color: #000000;
+        }
+
+            .header button {
+                background-color: transparent;
+                border: none;
+                color: #000000;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+        .month-year {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .weekdays, .days {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+            .weekdays div, .days div {
+                width: calc(100% / 7);
+                padding: 10px;
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+        .weekdays {
+            background-color: gold;
+            color: #000000;
+        }
+
+        .days div {
+            border-bottom: 1px solid #f4f4f4;
+            border-right: 1px solid #f4f4f4;
+        }
+
+            .days div:nth-child(7n) {
+                border-right: none;
+            }
+
+            .days div.inactive {
+                color: #ccc;
+            }
+
+        .days :hover {
+            background-color: gold;
+        }
+
+        a {
+            text-decoration: none;
+        }
+      /*  ------------------------------------------------------------------------------------- paymentPage----------------------------------------------------------------- */
+        .payment-method {
+            padding: 20px;
+            background-color: #6d6f53; /* Match background color */
+            border-radius: 5px;
+        }
+        .Card {
+            padding: 15px;
+            background-color: #fff; /* White background for the card input */
+            border-radius: 5px;
+            display: none; /* Hide by default */
+        }
+
+        .card input {
+            border: none;
+            box-shadow: none;
+        }
+
+        .form-check-input:checked {
+            color: black;
+            background-color:black;
+		
+		}
+         
+        .form-check {
+            margin: 10px 0;
+        }
+        .form-check-label {
+            font-weight: bold;
+        }
+
+        .payment-summary {
+            margin-top: 20px;
+        }
+
+       .payment-summary .row {
+                padding-top: 10px;
+                border-top: 1px solid #fff;
+        }
+
+         .payment-summary .row:first-of-type
+         {
+                    border-top: none;
+          }
+
+        .CerditInfo {
+            border: 1px solid #e3e3e3;
+            border-radius: 8px;
+        }
+
+        .input-group-text {
+            background-color: #f8f9fa;
+            border-right: 0;
+        }
+
+        .form-control {
+            border-left: 0;
+        }
+    
+
+    
+    </style>
+</head>
+
+<body >
+
+    <div class="shopping-cart" style=" background-color: #F0EDE3;">
+        <div class="title" >
+            Shopping Cart
+        </div>
+
+
+        <div class="container bg-light" >
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <img class="product-image" src="~/images/popular-equipment/oader-6.jpg" alt="Product Image">
+                            <span> Mighty Mover</span>
+                        </td>
+                        <td>£44.00</td>
+                        <td>
+                            <i class="delete-icon">&#10005;</i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img class="product-image" src="~/images/popular-equipment/container.jpg" alt="Product Image">
+                            <span> Robust Earthmover</span>
+                        </td>
+                        <td>£249.00</td>
+                        <td>
+                            <i class="delete-icon">&#10005;</i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img class="product-image" src="~/images/popular-equipment/excavator2.jpg" alt="Product Image">
+                            <span>Robust Load</span>
+                        </td>
+                        <td>£119.99</td>
+                        <td>
+                            <i class="delete-icon">&#10005;</i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+           
+        </div>
+
+
+        <div class="footer">
+            <a href=" " class="continue-shopping"> Continue Shopping</a>
+            <a href=" " class="make-order"> Make Order</a>
+        </div>
+    </div>
+
+
+    @* ------------------------------------------------------------------------------Make order--------------------------------------------------------------------------- *@
+
+
+    <div class="lightbox-Container d-none gap-5" id="FirstPage">
+        <div class="lightbox-Items ">
+
+            <div class="Information w-50  gap-3" id="1">
+                <i class="closeIcon fa-solid fa-xmark fa-3x d-flex justify-content-end w-100 text-white "></i>
+                <h3>Shipping Information </h3>
+
+                <input type="email" class="form-control" placeholder="lessee Email" aria-label="Username" aria-describedby="basic-addon1" />
+
+                <input type="email" class="form-control" placeholder="Reciver Person First Name" aria-label="Username" aria-describedby="basic-addon1" />
+
+                <input type="email" class="form-control" placeholder="Reciver Person last Name" aria-label="Username" aria-describedby="basic-addon1" />
+
+
+                <select class="form-select bg-s">
+                    <option value="" selected disabled hidden>Country</option>
+                    <option value="1">Egypt</option>
+                </select>
+                <select class="form-select bg-s">
+                    <option selected class="text-muted">City</option>
+                    <option value="2">Assuit</option>
+                    <option value="2">Cairo</option>
+                    <option value="2">Sohag</option>
+                    <option value="2">Minia</option>
+                    <option value="2">Mansora</option>
+                    <option value="2">Aswan</option>
+                    <option value="2">Alex</option>
+                    <option value="2">Qena</option>
+                </select>
+                <input type="email" class="form-control" placeholder="Street info" aria-label="Username" aria-describedby="basic-addon1" />
+                <div class="Boxbuttons d-flex justify-content-evenly">
+                    <button type="button" class="btn btn-outline-warning mt-4" id="Nextbtn">Next</button>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="lightbox-Container d-none" id="SecondPage">
+        <div class="lightbox-Items">
+            <div class="Information w-50">
+                <i class="closeIcon fa-solid fa-xmark fa-3x d-flex justify-content-end w-100 text-white"></i>
+                <h3>Select Delivery Service</h3>
+                <form class="w-100 d-flex flex-column align-content-around flex-wrap">
+                    <label class="text-light">Delivery Type</label>
+                    <select id="deliveryType" class="form-select bg-s" onchange="updateOptions()">
+                        <option value="" selected disabled hidden>Select Delivery Type</option>
+                        <option value="fast">Fast Delivery time:</option>
+                        <option value="medium">Medium Delivery time</option>
+                        <option value="slow">Slower but cheap</option>
+                        <option value="free">Free! you get what you pay for</option>
+                    </select>
+                    <br>
+                    <label class="text-light">Delivery Time:</label>
+                    <input type="text" id="deliveryTime" class="form-control" placeholder="Delivery Time" readonly>
+                    <br>
+                    <label class="text-light">Delivery Cost:</label>
+                    <input type="text" id="cost" class="form-control" placeholder="Delivery Cost" readonly>
+                    <br>
+                    <label class="text-light">Delivery Name:</label>
+                    <input type="text" id="DeliveryName" class="form-control" placeholder="Delivery Name" readonly>
+                    <br>
+                    <div class="Boxbuttons d-flex justify-content-evenly">
+                        <button type="button" class="btn btn-outline-warning" id="Backbtn">Back</button>
+                        <button type="button" class="btn btn-outline-warning" id="Nextbtn">Next</button>
+                    </div>
+                </form>
+                <script>
+                    document.getElementById("booknow").addEventListener("click", function () {
+                        document.getElementById("FirstPage").classList.remove("d-none");
+                    });
+
+
+                    document.querySelector(".closeIcon").addEventListener("click", function () {
+                        document.getElementById("FirstPage").classList.add("d-none");
+                        document.getElementById("SecondPage").classList.add("d-none");
+                    });
+
+                    function updateOptions() {
+                        const deliveryType = document.getElementById("deliveryType").value;
+                        const deliveryTime = document.getElementById("deliveryTime");
+                        const cost = document.getElementById("cost");
+                        const DeliveryName = document.getElementById("DeliveryName");
+
+                        if (deliveryType === "fast") {
+                            deliveryTime.value = "1-2 days";
+                            cost.value = "10";
+                            DeliveryName.value = "UPS1";
+                        } else if (deliveryType === "medium") {
+                            deliveryTime.value = "3-5 days";
+                            cost.value = "5";
+                            DeliveryName.value = "UPS2";
+                        } else if (deliveryType === "slow") {
+                            deliveryTime.value = "5-10 days";
+                            cost.value = "2";
+                            DeliveryName.value = "UPS3";
+                        } else if (deliveryType === "free") {
+                            deliveryTime.value = "1-2 weeks";
+                            cost.value = "0";
+                            DeliveryName.value = "FREE!";
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+
+  
+
+    <div class="lightbox-Container d-none " id="ThirdPage">
+        <div class="lightbox-Items ">
+
+            <div class="Information w-50 gap-5" id="1">
+
+                <div class="calendar mt-5">
+                    <div class="header">
+                        <button id="prev">Prev</button>
+                        <div class="month-year">
+                            <span id="month"></span>
+                            <span id="year"></span>
+                        </div>
+                        <button id="next">Next</button>
+                    </div>
+                    <div class="weekdays">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+                    <div class="days" id="days"></div>
+                </div>
+
+
+                <div class="Boxbuttons d-flex justify-content-evenly">
+                    <button type="button" class="btn btn-outline-warning" id="Backbtn">Back</button>
+                    <button type="button" class="btn btn-outline-warning" id="Nextbtn">Next</button>
+                  
+                </div>
+                <script>
+                    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+                    let currentDate = new Date();
+
+                    document.getElementById('prev').addEventListener('click', () => changeMonth(-1));
+                    document.getElementById('next').addEventListener('click', () => changeMonth(1));
+
+                    function changeMonth(delta) {
+                        currentDate.setMonth(currentDate.getMonth() + delta);
+                        renderCalendar();
+                    }
+
+                    function renderCalendar() {
+                        const month = currentDate.getMonth();
+                        const year = currentDate.getFullYear();
+
+                        document.getElementById('month').textContent = monthNames[month];
+                        document.getElementById('year').textContent = year;
+
+                        const daysElement = document.getElementById('days');
+                        daysElement.innerHTML = '';
+
+                        const firstDay = new Date(year, month, 1).getDay();
+                        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                        for (let i = 0; i < firstDay; i++) {
+                            const emptyDiv = document.createElement('div');
+                            emptyDiv.classList.add('inactive');
+                            daysElement.appendChild(emptyDiv);
+                        }
+
+                        for (let i = 1; i <= daysInMonth; i++) {
+                            const dayDiv = document.createElement('div');
+                            dayDiv.textContent = i;
+                            daysElement.appendChild(dayDiv);
+                        }
+                    }
+
+                    renderCalendar();
+                </script>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="lightbox-Container d-none" id="FourthPage">
+        <div class="lightbox-Items ">
+
+            <div class="Information w-50 ">
+                <i class="closeIcon fa-solid fa-xmark fa-3x d-flex justify-content-end w-100 text-white "></i>
+                <h3 class="mb-3"> Your Reservation </h3>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="item-details">
+                            <input type="text" class="form-control-plaintext" value="Versatile Material Handler" readonly>
+                        </div>
+                        <button class="btn btn-outline-danger btn-sm delete-card">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="item-details">
+                            <input type="text" class="form-control-plaintext" value="Versatile Material Handler" readonly>
+                        </div>
+                        <button class="btn btn-outline-danger btn-sm delete-card">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="item-details">
+                            <input type="text" class="form-control-plaintext" value="Versatile Material Handler" readonly>
+                        </div>
+                        <button class="btn btn-outline-danger btn-sm delete-card">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="total-section">
+                <h5> sub total: </h5>
+                <h5 id="total-amount">$525</h5>
+            </div>
+            <div class="total-section">
+                <h5>Commission:</h5>
+                <h5 id="total-amount"> + 10</h5>
+            </div>
+            <div class="total-section">
+                <h5>Shipping Cost:</h5>
+                <h5 id="total-amount"> + 50 </h5>
+            </div>
+            <hr class="custom-hr">
+            <div class="total-section">
+                <h5>Total:</h5>
+                <h5 id="total-amount"> $585</h5>
+            </div>
+
+            <div class="Boxbuttons mb-3  d-flex justify-content-evenly">
+                <button type="button" class="btn-outline-warning" id="Backbtn">Back</button>
+                <button type="button" class="btn-outline-warning" id="Nextbtn">Next</button>
+            </div>
+
+        </div>
+    </div>
+
+   
+    <div class="lightbox-Container d-none" id="FifthPage">
+        <div class="lightbox-Items ">
+
+            <div class="Information w-50 ">
+                <i class="closeIcon fa-solid fa-xmark fa-3x d-flex justify-content-end w-100 text-white "></i>
+             <div class="Payment  d-flex flex-column align-items-center justify-content-start gap-3">
+                    <h2 style="color:#F0EDE3;">Payment Method</h2>
+                    <div class="RadioBtns">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="Cash" value="Cash">
+                            <label class="form-check-label" for="Cash">Cash</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="CreditCard" value="CreditCard">
+                            <label class="form-check-label" for="CreditCard">Credit Card</label>
+                        </div>
+                    </div>
+
+					<div class="CerditInfo " p-3">
+                        <div class="card-body" style=" background-color: #F0EDE3;">
+                            <label for="cardNumber" class="form-label"> <i class="fas fa-credit-card mx-3 my-3"></i></label>
+                                <div class="input-group">
+                             
+                                    <input type="text" class="form-control" id="cardNumber" placeholder="Card num" style="max-width: 100px;">
+                                    <input type="text" class="form-control" placeholder="MM/YY" aria-label="Expiration date" style="max-width: 100px;">
+                                    <input type="text" class="form-control" placeholder="CVC" aria-label="CVC" style="max-width: 80px;">
+
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="d-flex gap-3 text-light justify-content-center align-items-end">
+                            <h4>Total :</h4>
+
+                            <h4>585$</h4>
+                        </div>
+
+                    <div class="Boxbuttons d-flex my-5 justify-content-evenly">
+                        <button type="button" class="btn btn-outline-warning" id="Backbtn">Back</button>
+                        <button type="button" class="btn btn-outline-warning" id="Nextbtn">Pay</button>
+                    </div>
+
+                </div>
+       
+        </div>
+    </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cashRadio = document.getElementById('Cash');
+            const cardRadio = document.getElementById('CreditCard');
+            const creditCardDiv = document.querySelector('.CerditInfo');
+
+            cashRadio.addEventListener('change', function () {
+                if (cashRadio.checked) {
+                    creditCardDiv.style.display = 'none';
+                }
+            });
+
+            cardRadio.addEventListener('change', function () {
+                if (cardRadio.checked) {
+                    creditCardDiv.style.display = 'block';
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.delete-card').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    const card = e.target.closest('.card');
+                    if (card) {
+                        card.remove();
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        const deleteIcons = document.querySelectorAll(".delete-icon");
+
+        deleteIcons.forEach(icon => {
+            icon.addEventListener("click", () => {
+                const row = icon.closest("tr");
+                row.remove();
+            });
+        });
+    </script>
+    <script>
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            const creditCardRadio = document.getElementById('creditCard');
+            const creditCardForm = document.getElementById('creditCardForm');
+            const creditCardInfo = document.getElementById('creditCardInfo');
+
+            creditCardRadio.addEventListener('change', function () {
+                if (this.checked) {
+                    creditCardForm.style.display = 'block';
+                    creditCardInfo.style.display = 'block';
+                }
+            });
+
+            document.querySelectorAll('input[name="paymentMethod"]').forEach(function (elem) {
+                elem.addEventListener('change', function () {
+                    if (!creditCardRadio.checked) {
+                        creditCardForm.style.display = 'none';
+                        creditCardInfo.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+    
+
+
+</body>
+</html>

@@ -1,33 +1,26 @@
 <template>
-    <div class="container  pt-2 mt-24">
+    <div class="container pt-2 mt-24">
         <div class="flex h-screen">
-            <EquipmentSideBar class=" p-4 pt-8" />
+            <EquipmentSideBar class="p-4 pt-8" />
             <div class="w-3/4 p-10 min-h-screen bg-white">
-
-                <div class="containe ">
-                    <div class="header rounded-xl">My Orders
-                    </div>
-
-                    <div class="machine">
-                        <img :src=image1 class="machine-image" alt="Machine Image" />
-                        <div class="machine-details">
-                            <div class="machine-name">ROBUST LOAD</div>
-                            <div class="machine-id"></div>
-                            <div class="machine-owner"></div>
+                <div class="containe">
+                    <div class="header rounded-xl">My Orders</div>
+                    <div v-for="order in orders" :key="order.id" class="order">
+                        <div class="order-details">
+                            <div class="order-id">Order ID: {{ order.id }}</div>
+                            <div class="order-date">Order Date: {{ new Date(order.orderDate).toLocaleDateString() }}
+                            </div>
+                            <div class="order-status">Status: {{ order.status }}</div>
                         </div>
-                        <div class="statu">from-27/6/2024 : to-27/6/2024</div>
-
-                    </div>
-
-                    <div class="machine">
-                        <img :src=image2 class="machine-image" alt="Machine Image" />
-                        <div class="machine-details">
-                            <div class="machine-name">EFFICIENT EARTHMOVER</div>
-                            <div class="machine-id"></div>
-                            <div class="machine-owner"></div>
+                        <div v-for="item in order.items" :key="item.productId" class="machine">
+                            <img :src="item.productUrl" class="machine-image" alt="Product Image" />
+                            <div class="machine-details">
+                                <div class="machine-name">{{ item.productName }}</div>
+                                <div class="machine-id">Product ID: {{ item.productId }}</div>
+                                <div class="machine-quantity">Quantity: {{ item.quantity }}</div>
+                            </div>
+                            <div class="statu">Price: ${{ item.price }} | Total: ${{ item.quantity * item.price }}</div>
                         </div>
-                        <div class="statu">from-27/6/2024 : to-27/6/2024</div>
-
                     </div>
                 </div>
             </div>
@@ -36,12 +29,30 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 import EquipmentSideBar from '@/components/EquipmentSaidBar.vue';
-import image1 from '@/assets/images/popular-equipment/16666.jpg';
-import image2 from '@/assets/images/popular-equipment/argculture.jpg';
 
+const orders = ref([]);
 
+const fetchOrders = async () => {
+    try {
+        const response = await axios.get('/api/Orders');
+        const baseURL = axios.defaults.baseURL; // Replace with your actual base URL
+
+        orders.value = response.data.map(order => ({
+            ...order,
+            items: order.items.map(item => ({
+                ...item,
+                productUrl: item.productUrl.replace('https://localhost:7021/', baseURL)
+            }))
+        }));
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+    }
+};
+
+onMounted(fetchOrders);
 </script>
 
 <style scoped>

@@ -54,7 +54,8 @@ const login = async () => {
         });
         success.value = 'Login successful!';
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('buskitId', form.value.email);
+        localStorage.removeItem('basketId');
+        localStorage.setItem('basketId', form.value.email);
         router.push('/');
         error.value = '';
     } catch (err) {

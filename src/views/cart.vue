@@ -1,6 +1,7 @@
 <template>
     <div class="flex items-center justify-center min-h-screen bg-gray-100">
         <div class="w-full max-w-7xl p-4 bg-white rounded-lg shadow-lg">
+
             <!-- Shopping Cart -->
             <div class="cart">
                 <h2 class="text-2xl font-bold mb-4">Shopping Cart</h2>
@@ -33,12 +34,12 @@
 
             <!-- Checkout Modal -->
             <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex z-50 items-center justify-center">
+                <!-- First Page: Shipping Information -->
                 <div class="bg-white relative p-8 rounded-lg w-full max-w-lg text-black"
                     v-if="currentStep === 'FirstPage'">
                     <button @click="closeModal()" class="absolute top-4 right-4 text-black hover:text-gray-600">
                         <closeIcon />
                     </button>
-
                     <h3 class="text-xl mb-4 text-center">Shipping Information</h3>
                     <div class="flex flex-col space-y-4">
                         <input type="email" class="w-full p-2 border rounded" placeholder="Lessee Email"
@@ -71,6 +72,7 @@
                     </div>
                 </div>
 
+                <!-- Second Page: Select Delivery Service -->
                 <div class="bg-white relative p-8 rounded-lg w-full max-w-lg text-black"
                     v-if="currentStep === 'SecondPage'">
                     <button @click="closeModal()" class="absolute top-4 right-4 text-black hover:text-gray-600">
@@ -133,6 +135,12 @@
                     </div>
                 </div>
 
+
+                <!-- Fifth Page: Payment Method -->
+                <paymant v-if="currentStep === 'PaymentPage'" @close="closeModal" @next="nextStep"
+                    @previous="previousStep" @finish="finishReservation" :cartItems="cartItems" />
+
+                <!-- Third Page: Your Reservation -->
                 <div class="bg-white p-8 relative rounded-lg w-full max-w-lg text-black"
                     v-if="currentStep === 'ThirdPage'">
                     <button @click="closeModal()" class="absolute top-4 right-4 text-black hover:text-gray-600">
@@ -151,7 +159,7 @@
                     <div class="mt-4 space-y-4">
                         <div class="flex justify-between">
                             <h5>Subtotal:</h5>
-                            <h5>{{ subtotal }}</h5>
+                            <h5>$525</h5>
                         </div>
                         <div class="flex justify-between">
                             <h5>Commission:</h5>
@@ -159,31 +167,35 @@
                         </div>
                         <div class="flex justify-between">
                             <h5>Total Cost:</h5>
-                            <h5>{{ totalCost }}</h5>
+                            <h5>$577.5</h5>
                         </div>
                     </div>
                     <div class="mt-4 flex justify-between space-x-4">
                         <button @click="previousStep()"
                             class="px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-400">Back</button>
-                        <button @click="submitReservation()"
-                            class="px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-400">Confirm</button>
+                        <button @click="finishReservation()"
+                            class="px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-400">Finish</button>
                     </div>
+
                 </div>
+
             </div>
         </div>
     </div>
-</template>
 
+</template>
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import axios from 'axios';
 import closeIcon from '@/components/icons/closeIcon.vue';
 import IconTrash from '@/components/icons/icon-trash.vue';
+import paymant from '@/components/paymant.vue';
 
 // Reactive references
-const cartItems = ref([]);
 const showModal = ref(false);
 const currentStep = ref('FirstPage');
+const cartItems = ref([]);
+const orderId = ref();
 const shippingInfo = ref({
     email: '',
     firstName: '',
@@ -192,22 +204,211 @@ const shippingInfo = ref({
     city: '',
     street: ''
 });
-const deliveryOptions = ref({
-    type: '',
-    time: '',
-    cost: '',
-    name: ''
-});
+const deliveryOptions = ref([]);
+const selectedDeliveryMethodId = ref(null);
+const month = ref(new Date().getMonth());
+const year = ref(new Date().getFullYear());
 const selectedDate = ref(null);
-const monthYear = ref('');
+
 const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const daysInMonth = ref([]);
 
-// Computed properties
-const subtotal = computed(() => cartItems.value.reduce((total, item) => total + item.price, 0));
-const totalCost = computed(() => subtotal.value * 1.1); // Adding 10% commission
+// Function to get days in a month
+function getDaysInMonth(month, year) {
+    let date = new Date(year, month, 1);
+    let days = [];
+    while (date.getMonth() === month) {
+        days.push({
+            date: new Date(date),
+            isSelected: selectedDate.value && date.toDateString() === selectedDate.value.toDateString()
+        });
+        date.setDate(date.getDate() + 1);
+    }
+    return days;
+}
 
-// Methods
+const daysInMonth = ref(getDaysInMonth(month.value, year.value));
+
+const monthYear = ref(`${new Date(year.value, month.value).toLocaleString('default', { month: 'long' })} ${year.value}`);
+
+// Function to go to previous month
+function prevMonth() {
+    if (month.value === 0) {
+        month.value = 11;
+        year.value -= 1;
+    } else {
+        month.value -= 1;
+    }
+    daysInMonth.value = getDaysInMonth(month.value, year.value);
+    monthYear.value = `${new Date(year.value, month.value).toLocaleString('default', { month: 'long' })} ${year.value}`;
+}
+
+// Function to go to next month
+function nextMonth() {
+    if (month.value === 11) {
+        month.value = 0;
+        year.value += 1;
+    } else {
+        month.value += 1;
+    }
+    daysInMonth.value = getDaysInMonth(month.value, year.value);
+    monthYear.value = `${new Date(year.value, month.value).toLocaleString('default', { month: 'long' })} ${year.value}`;
+}
+
+// Function to select a date
+function selectDate(date) {
+    selectedDate.value = date;
+    daysInMonth.value = getDaysInMonth(month.value, year.value);
+}
+
+
+// Function to close modal
+function closeModal() {
+    showModal.value = false;
+    currentStep.value = 'FirstPage'; // Reset to the first step if needed
+}
+
+
+
+// Function to go to next step in checkout process
+function nextStep() {
+    switch (currentStep.value) {
+        case 'FirstPage':
+            currentStep.value = 'SecondPage';
+            break;
+        case 'SecondPage':
+            currentStep.value = 'CalendarPage';
+            break;
+        case 'CalendarPage':
+            currentStep.value = 'ThirdPage';
+            break;
+        case 'ThirdPage':
+            currentStep.value = 'PaymentPage';
+            break;
+    }
+}
+
+// Function to go to the previous step in the checkout process
+function previousStep() {
+    switch (currentStep.value) {
+        case 'SecondPage':
+            currentStep.value = 'FirstPage';
+            break;
+        case 'CalendarPage':
+            currentStep.value = 'SecondPage';
+            break;
+        case 'ThirdPage':
+            currentStep.value = 'CalendarPage';
+            break;
+        case 'PaymentPage':
+            currentStep.value = 'ThirdPage';
+            break;
+    }
+}
+
+// Function to finish the reservation
+const errorMessage = ref('');
+
+async function finishReservation() {
+    try {
+        await checkout();
+        console.log('Reservation completed');
+        currentStep.value = 'PaymentPage';
+    } catch (error) {
+        errorMessage.value = 'Error completing reservation: ' + error.message;
+        console.error('Error completing reservation:', error);
+    }
+}
+
+// Function to remove item from cart
+async function removeItem(id) {
+    const basketId = localStorage.getItem('basketId');
+    if (!basketId) return;
+
+    try {
+        // Fetch the current basket items from the server
+        const response = await axios.get(`/api/Baskets/${basketId}`);
+        let basketItems = response.data.items;
+
+        // Filter out the item to be removed
+        basketItems = basketItems.filter(item => item.id !== id);
+
+        // Send a PUT request to update the basket on the server
+        const updateResponse = await axios.put(`/api/Baskets/${basketId}`, {
+            id: basketId,
+            items: basketItems
+        });
+
+        // Update the local cartItems value
+        cartItems.value = basketItems;
+        console.log('Successfully removed item from cart:', updateResponse.data);
+    } catch (error) {
+        console.error('Failed to remove item from cart', error.response ? error.response.data : error);
+    }
+}
+
+// Function to update delivery options
+function updateOptions() {
+    const deliveryType = document.getElementById('deliveryType').value;
+    if (deliveryType === 'fast') {
+        document.getElementById('deliveryTime').value = '1-2 days';
+        document.getElementById('cost').value = '£20.00';
+        document.getElementById('DeliveryName').value = 'Express Delivery';
+        selectedDeliveryMethodId.value = 1; // Example ID for fast delivery
+    } else if (deliveryType === 'medium') {
+        document.getElementById('deliveryTime').value = '3-5 days';
+        document.getElementById('cost').value = '£10.00';
+        document.getElementById('DeliveryName').value = 'Standard Delivery';
+        selectedDeliveryMethodId.value = 2; // Example ID for medium delivery
+    } else if (deliveryType === 'slow') {
+        document.getElementById('deliveryTime').value = '5-7 days';
+        document.getElementById('cost').value = '£5.00';
+        document.getElementById('DeliveryName').value = 'Economy Delivery';
+        selectedDeliveryMethodId.value = 3; // Example ID for slow delivery
+    } else if (deliveryType === 'free') {
+        document.getElementById('deliveryTime').value = '7-10 days';
+        document.getElementById('cost').value = 'Free';
+        document.getElementById('DeliveryName').value = 'Free Delivery';
+        selectedDeliveryMethodId.value = 4; // Example ID for free delivery
+    }
+}
+
+
+// New method for checkout
+function checkout() {
+    const basketId = localStorage.getItem('basketId');
+    if (!basketId || !selectedDeliveryMethodId.value || !selectedDate.value) {
+        console.error('Missing necessary information for checkout.');
+        return;
+    }
+
+    const orderData = {
+        basketId: basketId,
+        deliveryMethodId: selectedDeliveryMethodId.value, // Assuming ID is set properly
+        shippingAddress: {
+            firstName: shippingInfo.value.firstName,
+            lastName: shippingInfo.value.lastName,
+            city: shippingInfo.value.city,
+            street: shippingInfo.value.street,
+            country: shippingInfo.value.country
+        },
+        startDate: selectedDate.value.toISOString().split('T')[0], // Ensuring date format is correct
+        endDate: selectedDate.value.toISOString().split('T')[0] // Assuming end date is the same as start date
+    };
+
+    axios.post('/api/Orders/CreateOrder', orderData)
+        .then(response => {
+            console.log('Order created successfully:', response.data);
+            orderId.value = response.data.id;
+
+            nextStep();
+            // Optionally redirect to an order confirmation page or show a success message
+        })
+        .catch(error => {
+            console.error('Error creating order:', error);
+        });
+}
+
+
 const fetchCartItems = () => {
     const basketId = localStorage.getItem('basketId');
     if (basketId) {
@@ -226,66 +427,65 @@ const fetchCartItems = () => {
 };
 
 
-const removeItem = (itemId) => {
-    // Implement item removal logic here
-};
 
-const closeModal = () => {
-    showModal.value = false;
-};
 
-const nextStep = () => {
-    if (currentStep.value === 'FirstPage') {
-        currentStep.value = 'SecondPage';
-    } else if (currentStep.value === 'SecondPage') {
-        currentStep.value = 'CalendarPage';
-    } else if (currentStep.value === 'CalendarPage') {
-        currentStep.value = 'ThirdPage';
-    }
-};
 
-const previousStep = () => {
-    if (currentStep.value === 'SecondPage') {
-        currentStep.value = 'FirstPage';
-    } else if (currentStep.value === 'CalendarPage') {
-        currentStep.value = 'SecondPage';
-    } else if (currentStep.value === 'ThirdPage') {
-        currentStep.value = 'CalendarPage';
-    }
-};
-
-const updateOptions = (event) => {
-    const selectedOption = event.target.value;
-    // Fetch and update delivery options based on selected type
-};
-
-const selectDate = (date) => {
-    selectedDate.value = date;
-    daysInMonth.value.forEach(day => {
-        day.isSelected = (day.date === date);
-    });
-};
-
-const prevMonth = () => {
-    // Navigate to the previous month
-};
-
-const nextMonth = () => {
-    // Navigate to the next month
-};
-
-const submitReservation = () => {
-    // Implement reservation submission logic here
-};
-
-// Lifecycle hook
 onMounted(() => {
     fetchCartItems();
 });
+
 </script>
 
 
-
 <style scoped>
-/* Your existing styles */
+.CerditInfo {
+    border: 1px solid #e3e3e3;
+    border-radius: 8px;
+}
+
+.input-group-text {
+    background-color: #f8f9fa;
+    border-right: 0;
+}
+
+.form-control {
+    border-left: 0;
+}
+
+.calendar-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.calendar-header {
+    grid-column: span 7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendar-body {
+    display: contents;
+}
+
+.day-name {
+    font-weight: bold;
+    text-align: center;
+}
+
+.day {
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.day:hover {
+    background-color: #f0f0f0;
+}
+
+.selected {
+    background-color: #ffd700;
+}
 </style>

@@ -1,30 +1,17 @@
 <template>
-    <div class="container  pt-2 mt-24">
+    <div class="container pt-2 mt-24">
         <div class="flex">
-            <EquipmentSideBar class=" p-4 pt-8" />
+            <EquipmentSideBar class="p-4 pt-8" />
             <div class="w-3/4 p-10 min-h-screen bg-white">
-
-                <div class="containe ">
+                <div class="containe">
                     <div class="header rounded-xl">MACHIENS RENTED</div>
-
-                    <div class="machine">
-                        <img :src=image1 class="machine-image" alt="Machine Image" />
+                    <div v-for="machine in rentedMachines" :key="machine.machineId" class="machine">
+                        <img :src="machine.imageUrl" class="machine-image" alt="Machine Image" />
                         <div class="machine-details">
-                            <div class="machine-name">ROBUST LOAD</div>
-                            <div class="machine-id">184677</div>
-                            <div class="machine-owner">Ahmed nabil</div>
+                            <div class="machine-name">{{ machine.machineName }}</div>
+                            <div class="machine-id">{{ machine.machineId }}</div>
+                            <div class="machine-owner">{{ machine.lessorName }}</div>
                         </div>
-
-                    </div>
-
-                    <div class="machine">
-                        <img :src=image2 class="machine-image" alt="Machine Image" />
-                        <div class="machine-details">
-                            <div class="machine-name">EFFICIENT EARTHMOVER</div>
-                            <div class="machine-id">32456</div>
-                            <div class="machine-owner">mohameed ali</div>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -33,12 +20,29 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 import EquipmentSideBar from '@/components/EquipmentSaidBar.vue';
-import image1 from '@/assets/images/popular-equipment/16666.jpg';
-import image2 from '@/assets/images/popular-equipment/argculture.jpg';
 
+const rentedMachines = ref([]);
 
+const fetchRentedMachines = async () => {
+    try {
+        const response = await axios.get('/api/Machine/GetRentedMachinesForLessor');
+        const baseURL = axios.defaults.baseURL || 'https://your-base-url.com/'; // Replace with your actual base URL
+
+        rentedMachines.value = response.data.map(machine => ({
+            machineId: machine.machineId,
+            machineName: machine.machineName,
+            imageUrl: machine.imageUrl.replace('https://localhost:7021/', baseURL),
+            lessorName: "Unknown", // Replace with actual field if present in the response
+        }));
+    } catch (error) {
+        console.error('Error fetching rented machines:', error);
+    }
+};
+
+onMounted(fetchRentedMachines);
 </script>
 
 <style scoped>
@@ -65,12 +69,9 @@ import image2 from '@/assets/images/popular-equipment/argculture.jpg';
     width: fit-content;
     height: fit-content;
     padding: 20px;
-    /* border-radius: 5%; */
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
-
 
 .machine {
     margin-left: 200px;
