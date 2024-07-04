@@ -6,7 +6,7 @@
         <div class="h-[300px]" v-for="(item, index) in equipment" :key="index">
           <div
             class="relative h-[300px] overflow-hidden rounded-lg transform transition-transform duration-500 hover:scale-105">
-            <img :src="item.imageName" alt="Equipment" class="object-cover">
+            <img :src="item.imageUrl" alt="Equipment" class="object-cover">
             <div
               class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4 text-white flex flex-col justify-end">
               <p class="text-sm"><i class="fa-regular fa-compass"></i> {{ item.machineName }}</p>
@@ -37,12 +37,17 @@ const equipment = ref([]);
 const GetAllPopularMachines = async () => {
   try {
     const response = await axios.get('/api/Machine/GetAllPopularMachines');
-    equipment.value = response.data;
-    console.log(response.data);
+    equipment.value = response.data.map(machine => ({
+      ...machine,
+      imageUrl: machine.imageUrl.replace('https://localhost:7021/', axios.defaults.baseURL),
+      contractImageUrl: machine.contractImageUrl.replace('https://localhost:7021/', axios.defaults.baseURL),
+    }));
+    console.log(equipment.value);
   } catch (error) {
     console.error(error);
   }
 };
+
 
 onMounted(() => {
   GetAllPopularMachines();
