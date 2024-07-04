@@ -61,58 +61,9 @@
             </button>
         </div>
 
-        <!-- Popular Equipment -->
-        <!-- <div class="bg-gray-800 py-12">
-            <h1 class="text-center text-white text-3xl mb-8">Popular Equipment</h1>
-            <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg">
-                    <img :src="industrialCrane" class="w-full h-48 object-cover" alt="Wheel loader" />
-                    <div class="p-4">
-                        <p class="text-yellow-500"><i class="fa-regular fa-compass"></i> Wheel loader</p>
-                        <h4 class="text-lg font-bold">Efficient earth mover</h4>
-                        <p>from 75$ per day</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg">
-                    <img :src="excavators" class="w-full h-48 object-cover" alt="Excavator" />
-                    <div class="p-4">
-                        <p class="text-yellow-500"><i class="fa-regular fa-compass"></i> Excavator</p>
-                        <h4 class="text-lg font-bold">Efficient earth mover</h4>
-                        <p>from 75$ per day</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg">
-                    <img :src="container" class="w-full h-48 object-cover" alt="Wheel loader" />
-                    <div class="p-4">
-                        <p class="text-yellow-500"><i class="fa-regular fa-compass"></i> Wheel loader</p>
-                        <h4 class="text-lg font-bold">Efficient earth mover</h4>
-                        <p>from 75$ per day</p>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center mt-8">
-                <router-link to="/allequipment">
-                    <button class="px-6 py-3 bg-yellow-500 rounded">SEE ALL EQUIPMENT</button>
-                </router-link>
-            </div>
-        </div> -->
         <PopularEquipment />
 
 
-        <!-- Trusted Companies -->
-        <!-- <section class="bg-gray-100 py-12">
-            <div class="container mx-auto text-center">
-                <h2 class="text-yellow-500 text-sm">Our Trusted Partner</h2>
-                <h1 class="text-3xl font-bold text-gray-800 mb-8">Our Trusted Companies</h1>
-                <div class="flex justify-center space-x-8">
-                    <img :src="pic1" class="h-20" alt="Trusted Company 1" />
-                    <img :src="pic2" class="h-20" alt="Trusted Company 2" />
-                    <img :src="pic3" class="h-20" alt="Trusted Company 3" />
-                    <img :src="pic4" class="h-20" alt="Trusted Company 4" />
-                    <img :src="pic5" class="h-20" alt="Trusted Company 5" />
-                </div>
-            </div>
-        </section> -->
         <TrustedCompanies />
     </div>
 </template>
@@ -125,14 +76,7 @@ import 'swiper/swiper-bundle.css';
 import validImage from '@/assets/images/homepage/istockphoto-1387256339-1024x1024.webp';
 import twoEquipment from '@/assets/images/homepage/twoEqipment.jpg';
 import plasticInjection from '@/assets/images/homepage/plastic-injection-molding-factory-generative-ai_547471-983.jpg';
-import industrialCrane from '@/assets/images/popular-equipment/industrial-crane-blue-sky.jpg';
-import excavators from '@/assets/images/popular-equipment/excaftors.jpg';
-import container from '@/assets/images/popular-equipment/container.jpg';
-import pic1 from '@/assets/images/TrustCompany/pic1.jpg';
-import pic2 from '@/assets/images/TrustCompany/pic2.jpg';
-import pic3 from '@/assets/images/TrustCompany/pic3.jpg';
-import pic4 from '@/assets/images/TrustCompany/pic4.jpg';
-import pic5 from '@/assets/images/TrustCompany/picc5.jpg';
+
 import PopularEquipment from '@/components/PopularEquipment.vue';
 import TrustedCompanies from '@/components/TrustedCompanies.vue';
 
