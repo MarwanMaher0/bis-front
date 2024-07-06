@@ -334,7 +334,7 @@ async function finishReservation() {
     try {
         await checkout();
         console.log('Reservation completed');
-        currentStep.value = 'PaymentPage';
+
     } catch (error) {
         errorMessage.value = 'Error completing reservation: ' + error.message;
         console.error('Error completing reservation:', error);
@@ -385,10 +385,16 @@ function updateOptions() {
     }
 }
 
-function checkout() {
+const checkout = () => {
     const basketId = localStorage.getItem('basketId');
     if (!basketId || !selectedDeliveryMethodId.value || !selectedStartDate.value || !selectedEndDate.value) {
         console.error('Missing necessary information for checkout.');
+        return;
+    }
+
+    // Ensure shippingInfo and its properties are defined before proceeding
+    if (!shippingInfo.value || !shippingInfo.value.firstName || !shippingInfo.value.lastName || !shippingInfo.value.city || !shippingInfo.value.street || !shippingInfo.value.country) {
+        console.error('Incomplete shipping information.');
         return;
     }
 
@@ -410,12 +416,17 @@ function checkout() {
         .then(response => {
             console.log('Order created successfully:', response.data);
             orderId.value = response.data.id;
-            currentStep.value = 'PaymentPage';
+            // Assuming nextStep is a function that advances the UI to the next step in the process
+            if (response.status === 200) {
+                nextStep();
+                currentStep.value = 'PaymentPage';
+            }
         })
         .catch(error => {
             console.error('Error creating order:', error);
         });
 }
+
 
 const fetchCartItems = () => {
     const basketId = localStorage.getItem('basketId');

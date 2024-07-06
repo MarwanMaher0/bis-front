@@ -36,19 +36,17 @@
         <div class="mt-4 flex justify-between space-x-4">
             <button @click="previousStep"
                 class="px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-400">Back</button>
-            <button @click="PostPay" class="px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-400">Pay</button>
+            <button @click="postPay" class="px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-400">Pay</button>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { defineProps, defineEmits } from 'vue';
-import { onMounted } from 'vue';
 import axios from 'axios';
 import closeIcon from './icons/closeIcon.vue';
 import router from '@/router';
-
 
 const props = defineProps({
     cartItems: Array,
@@ -76,7 +74,27 @@ const nextStep = () => {
 };
 
 const id = ref(null);
-const PostPay = () => {
+
+async function removeItem() {
+    const basketId = localStorage.getItem('basketId');
+    if (!basketId) return;
+
+    try {
+        const response = await axios.get(`/api/Baskets/${basketId}`);
+        let basketItems = response.data.items;
+        basketItems = basketItems.filter(item => item.id !== id.value);
+        const updateResponse = await axios.put(`/api/Baskets/${basketId}`, {
+            id: basketId,
+            items: basketItems
+        });
+        props.cartItems = basketItems;
+        console.log('Successfully removed item from cart:', updateResponse.data);
+    } catch (error) {
+        console.error('Failed to remove item from cart', error.response ? error.response.data : error);
+    }
+}
+
+const postPay = () => {
     axios.post('/api/Payment/LesseePayForUser', {
         cardNumber: creditCardInfo.value.number,
         cvc: creditCardInfo.value.cvv,
@@ -86,13 +104,13 @@ const PostPay = () => {
         .then(response => {
             console.log('Payment successful:', response.data);
             emit('finish', response.data); // Emit finish event with response data
+            removeItem();
             router.push("/LessorOrder");
         })
         .catch(error => {
             console.error('Payment failed:', error);
         });
 };
-
 
 const fetchOrders = async () => {
     try {
