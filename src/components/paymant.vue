@@ -46,6 +46,9 @@ import { ref } from 'vue';
 import { defineProps, defineEmits } from 'vue';
 import { onMounted } from 'vue';
 import axios from 'axios';
+import closeIcon from './icons/closeIcon.vue';
+import router from '@/router';
+
 
 const props = defineProps({
     cartItems: Array,
@@ -73,21 +76,23 @@ const nextStep = () => {
 };
 
 const id = ref(null);
-
-const PostPay = async () => {
-    try {
-        const response = await axios.post('/api/Payment/LesseePayForUser', {
-            cardNumber: creditCardInfo.value.number,
-            cvc: creditCardInfo.value.cvv,
-            mmyy: creditCardInfo.value.expiry,
-            orderId: id.value
+const PostPay = () => {
+    axios.post('/api/Payment/LesseePayForUser', {
+        cardNumber: creditCardInfo.value.number,
+        cvc: creditCardInfo.value.cvv,
+        mmyy: creditCardInfo.value.expiry,
+        orderId: id.value
+    })
+        .then(response => {
+            console.log('Payment successful:', response.data);
+            emit('finish', response.data); // Emit finish event with response data
+            router.push("/LessorOrder");
+        })
+        .catch(error => {
+            console.error('Payment failed:', error);
         });
-        console.log('Payment successful:', response.data);
-        emit('finish', response.data); // Emit finish event with response data
-    } catch (error) {
-        console.error('Payment failed:', error);
-    }
 };
+
 
 const fetchOrders = async () => {
     try {

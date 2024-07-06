@@ -31,3 +31,6 @@
     color: gold;
 }
 </style>
+<script setup>
+const Role = localStorage.getItem("Role")
+</script>

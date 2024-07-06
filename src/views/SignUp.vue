@@ -6,8 +6,8 @@
                 <label for="role" class="block text-gray-700 font-semibold mb-2">Role:</label>
                 <select id="role" v-model="form.role" required
                     class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                    <option value="Lassor">Lessor</option>
-                    <option value="Lessee">Lessee</option>
+                    <option value="Lassor">marchant</option>
+                    <option value="Lessee">user</option>
                 </select>
             </div>
             <div class="mb-4">

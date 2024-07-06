@@ -10,7 +10,12 @@
                         <tr>
                             <th class="p-4 rounded-tl-2xl">Product</th>
                             <th class="p-4">Price</th>
-                            <th class="p-4 text-center rounded-tr-2xl">Remove</th>
+                            <th class="p-4 text-center ">Quantity</th>
+                            <th class="p-4 text-center rounded-tr-2xl">Remove all <button @click="removeItem(item.id)"
+                                    class="text-red-600 hover:underline">
+                                    <closeIcon class="fill-red-600" />
+                                </button></th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -20,6 +25,9 @@
                                 <span>{{ item.name }}</span>
                             </td>
                             <td class="p-4">{{ item.price }}</td>
+                            <td class="p-4 text-center">
+                                {{ item.quantity }}
+                            </td>
                             <td class="p-4 text-center">
                                 <button @click="removeItem(item.id)" class="text-red-600 hover:underline">
                                     <closeIcon class="fill-red-600" />
@@ -109,10 +117,10 @@
                 <!-- Calendar Page -->
                 <div class="bg-white relative p-8 rounded-lg w-full max-w-lg text-black"
                     v-if="currentStep === 'CalendarPage'">
-                    <button @click="closeModal()" class="absolute top-4 right-4 text-black hover:text-gray-600">
+                    <button @click="closeModal" class="absolute top-4 right-4 text-black hover:text-gray-600">
                         <closeIcon />
                     </button>
-                    <h3 class="text-xl mb-4 text-center">Select a Date</h3>
+                    <h3 class="text-xl mb-4 text-center">Select a Start and End Date</h3>
                     <div class="calendar-container">
                         <div class="calendar-header">
                             <button @click="prevMonth" class="prev-month">‹</button>
@@ -122,15 +130,15 @@
                         <div class="calendar-body">
                             <div class="day-name" v-for="day in daysOfWeek" :key="day">{{ day }}</div>
                             <div class="day" v-for="day in daysInMonth" :key="day.date" @click="selectDate(day.date)"
-                                :class="{ 'selected': day.isSelected }">
+                                :class="{ 'selected': day.isSelected, 'range': day.isInRange }">
                                 {{ day.date.getDate() }}
                             </div>
                         </div>
                     </div>
                     <div class="mt-4 flex justify-between space-x-4">
-                        <button @click="previousStep()"
+                        <button @click="previousStep"
                             class="px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-400">Back</button>
-                        <button @click="nextStep()"
+                        <button @click="nextStep"
                             class="px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-400">Next</button>
                     </div>
                 </div>
@@ -185,13 +193,12 @@
 
 </template>
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import axios from 'axios';
 import closeIcon from '@/components/icons/closeIcon.vue';
 import IconTrash from '@/components/icons/icon-trash.vue';
 import paymant from '@/components/paymant.vue';
 
-// Reactive references
 const showModal = ref(false);
 const currentStep = ref('FirstPage');
 const cartItems = ref([]);
@@ -208,7 +215,8 @@ const deliveryOptions = ref([]);
 const selectedDeliveryMethodId = ref(null);
 const month = ref(new Date().getMonth());
 const year = ref(new Date().getFullYear());
-const selectedDate = ref(null);
+const selectedStartDate = ref(null);
+const selectedEndDate = ref(null);
 
 const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -219,7 +227,8 @@ function getDaysInMonth(month, year) {
     while (date.getMonth() === month) {
         days.push({
             date: new Date(date),
-            isSelected: selectedDate.value && date.toDateString() === selectedDate.value.toDateString()
+            isSelected: false,
+            isInRange: false
         });
         date.setDate(date.getDate() + 1);
     }
@@ -228,9 +237,10 @@ function getDaysInMonth(month, year) {
 
 const daysInMonth = ref(getDaysInMonth(month.value, year.value));
 
-const monthYear = ref(`${new Date(year.value, month.value).toLocaleString('default', { month: 'long' })} ${year.value}`);
+const monthYear = computed(() => {
+    return `${new Date(year.value, month.value).toLocaleString('default', { month: 'long' })} ${year.value}`;
+});
 
-// Function to go to previous month
 function prevMonth() {
     if (month.value === 0) {
         month.value = 11;
@@ -239,10 +249,8 @@ function prevMonth() {
         month.value -= 1;
     }
     daysInMonth.value = getDaysInMonth(month.value, year.value);
-    monthYear.value = `${new Date(year.value, month.value).toLocaleString('default', { month: 'long' })} ${year.value}`;
 }
 
-// Function to go to next month
 function nextMonth() {
     if (month.value === 11) {
         month.value = 0;
@@ -251,25 +259,37 @@ function nextMonth() {
         month.value += 1;
     }
     daysInMonth.value = getDaysInMonth(month.value, year.value);
-    monthYear.value = `${new Date(year.value, month.value).toLocaleString('default', { month: 'long' })} ${year.value}`;
 }
 
-// Function to select a date
 function selectDate(date) {
-    selectedDate.value = date;
-    daysInMonth.value = getDaysInMonth(month.value, year.value);
+    if (!selectedStartDate.value || selectedEndDate.value) {
+        selectedStartDate.value = date;
+        selectedEndDate.value = null;
+    } else {
+        if (date >= selectedStartDate.value) {
+            selectedEndDate.value = date;
+        } else {
+            selectedStartDate.value = date;
+            selectedEndDate.value = null;
+        }
+    }
+    updateDateSelection();
 }
 
+function updateDateSelection() {
+    daysInMonth.value.forEach(day => {
+        day.isSelected = (day.date.getTime() === selectedStartDate.value?.getTime() ||
+            day.date.getTime() === selectedEndDate.value?.getTime());
+        day.isInRange = selectedStartDate.value && selectedEndDate.value &&
+            day.date > selectedStartDate.value && day.date < selectedEndDate.value;
+    });
+}
 
-// Function to close modal
 function closeModal() {
     showModal.value = false;
-    currentStep.value = 'FirstPage'; // Reset to the first step if needed
+    currentStep.value = 'FirstPage';
 }
 
-
-
-// Function to go to next step in checkout process
 function nextStep() {
     switch (currentStep.value) {
         case 'FirstPage':
@@ -279,7 +299,11 @@ function nextStep() {
             currentStep.value = 'CalendarPage';
             break;
         case 'CalendarPage':
-            currentStep.value = 'ThirdPage';
+            if (selectedStartDate.value && selectedEndDate.value) {
+                currentStep.value = 'ThirdPage';
+            } else {
+                console.error('Please select both start and end dates.');
+            }
             break;
         case 'ThirdPage':
             currentStep.value = 'PaymentPage';
@@ -287,7 +311,6 @@ function nextStep() {
     }
 }
 
-// Function to go to the previous step in the checkout process
 function previousStep() {
     switch (currentStep.value) {
         case 'SecondPage':
@@ -305,7 +328,6 @@ function previousStep() {
     }
 }
 
-// Function to finish the reservation
 const errorMessage = ref('');
 
 async function finishReservation() {
@@ -319,26 +341,18 @@ async function finishReservation() {
     }
 }
 
-// Function to remove item from cart
 async function removeItem(id) {
     const basketId = localStorage.getItem('basketId');
     if (!basketId) return;
 
     try {
-        // Fetch the current basket items from the server
         const response = await axios.get(`/api/Baskets/${basketId}`);
         let basketItems = response.data.items;
-
-        // Filter out the item to be removed
         basketItems = basketItems.filter(item => item.id !== id);
-
-        // Send a PUT request to update the basket on the server
         const updateResponse = await axios.put(`/api/Baskets/${basketId}`, {
             id: basketId,
             items: basketItems
         });
-
-        // Update the local cartItems value
         cartItems.value = basketItems;
         console.log('Successfully removed item from cart:', updateResponse.data);
     } catch (error) {
@@ -346,44 +360,41 @@ async function removeItem(id) {
     }
 }
 
-// Function to update delivery options
 function updateOptions() {
     const deliveryType = document.getElementById('deliveryType').value;
     if (deliveryType === 'fast') {
         document.getElementById('deliveryTime').value = '1-2 days';
         document.getElementById('cost').value = '£20.00';
         document.getElementById('DeliveryName').value = 'Express Delivery';
-        selectedDeliveryMethodId.value = 1; // Example ID for fast delivery
+        selectedDeliveryMethodId.value = 1;
     } else if (deliveryType === 'medium') {
         document.getElementById('deliveryTime').value = '3-5 days';
         document.getElementById('cost').value = '£10.00';
         document.getElementById('DeliveryName').value = 'Standard Delivery';
-        selectedDeliveryMethodId.value = 2; // Example ID for medium delivery
+        selectedDeliveryMethodId.value = 2;
     } else if (deliveryType === 'slow') {
         document.getElementById('deliveryTime').value = '5-7 days';
         document.getElementById('cost').value = '£5.00';
         document.getElementById('DeliveryName').value = 'Economy Delivery';
-        selectedDeliveryMethodId.value = 3; // Example ID for slow delivery
+        selectedDeliveryMethodId.value = 3;
     } else if (deliveryType === 'free') {
         document.getElementById('deliveryTime').value = '7-10 days';
         document.getElementById('cost').value = 'Free';
         document.getElementById('DeliveryName').value = 'Free Delivery';
-        selectedDeliveryMethodId.value = 4; // Example ID for free delivery
+        selectedDeliveryMethodId.value = 4;
     }
 }
 
-
-// New method for checkout
 function checkout() {
     const basketId = localStorage.getItem('basketId');
-    if (!basketId || !selectedDeliveryMethodId.value || !selectedDate.value) {
+    if (!basketId || !selectedDeliveryMethodId.value || !selectedStartDate.value || !selectedEndDate.value) {
         console.error('Missing necessary information for checkout.');
         return;
     }
 
     const orderData = {
         basketId: basketId,
-        deliveryMethodId: selectedDeliveryMethodId.value, // Assuming ID is set properly
+        deliveryMethodId: selectedDeliveryMethodId.value,
         shippingAddress: {
             firstName: shippingInfo.value.firstName,
             lastName: shippingInfo.value.lastName,
@@ -391,30 +402,26 @@ function checkout() {
             street: shippingInfo.value.street,
             country: shippingInfo.value.country
         },
-        startDate: selectedDate.value.toISOString().split('T')[0], // Ensuring date format is correct
-        endDate: selectedDate.value.toISOString().split('T')[0] // Assuming end date is the same as start date
+        startDate: selectedStartDate.value.toISOString().split('T')[0],
+        endDate: selectedEndDate.value.toISOString().split('T')[0]
     };
 
     axios.post('/api/Orders/CreateOrder', orderData)
         .then(response => {
             console.log('Order created successfully:', response.data);
             orderId.value = response.data.id;
-
-            nextStep();
-            // Optionally redirect to an order confirmation page or show a success message
+            currentStep.value = 'PaymentPage';
         })
         .catch(error => {
             console.error('Error creating order:', error);
         });
 }
 
-
 const fetchCartItems = () => {
     const basketId = localStorage.getItem('basketId');
     if (basketId) {
         axios.get(`/api/Baskets/${basketId}`)
             .then(response => {
-                // Replace base URL in each item's picturUrl
                 cartItems.value = response.data.items.map(item => {
                     item.picturUrl = item.picturUrl.replace('https://localhost:7021/', axios.defaults.baseURL);
                     return item;
@@ -426,14 +433,9 @@ const fetchCartItems = () => {
     }
 };
 
-
-
-
-
 onMounted(() => {
     fetchCartItems();
 });
-
 </script>
 
 
@@ -486,6 +488,10 @@ onMounted(() => {
 }
 
 .selected {
+    background-color: #ffd700;
+}
+
+.day.range {
     background-color: #ffd700;
 }
 </style>

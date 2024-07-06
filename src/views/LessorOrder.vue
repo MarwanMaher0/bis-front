@@ -1,16 +1,19 @@
 <template>
     <div class="container pt-2 mt-24">
-        <div class="flex h-screen">
+        <div class="flex min-h-screen">
             <EquipmentSideBar class="p-4 pt-8" />
             <div class="w-3/4 p-10 min-h-screen bg-white">
                 <div class="containe">
                     <div class="header rounded-xl">My Orders</div>
                     <div v-for="order in orders" :key="order.id" class="order">
+
                         <div class="order-details">
                             <div class="order-id">Order ID: {{ order.id }}</div>
                             <div class="order-date">Order Date: {{ new Date(order.orderDate).toLocaleDateString() }}
                             </div>
                             <div class="order-status">Status: {{ order.status }}</div>
+                            <div class="order-statu">Order Total: ${{ order.total }}</div>
+
                         </div>
                         <div v-for="item in order.items" :key="item.productId" class="machine">
                             <img :src="item.productUrl" class="machine-image" alt="Product Image" />
@@ -21,6 +24,7 @@
                             </div>
                             <div class="statu">Price: ${{ item.price }} | Total: ${{ item.quantity * item.price }}</div>
                         </div>
+
                     </div>
                 </div>
             </div>
