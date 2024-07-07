@@ -4,7 +4,8 @@
             <EquipmentSideBar class="p-4 pt-8" />
             <div class="w-3/4 p-6 bg-white">
                 <div class="grid grid-cols-2 gap-4">
-                    <EquipmentCard v-for="equipment in equipments" :key="equipment.id" :equipment="equipment" />
+                    <EquipmentCard v-for="equipment in equipments" :key="equipment.id" :equipment="equipment"
+                        @equipmentDeleted="fetchEquipments" :fetchEquipments="fetchEquipments" />
                 </div>
             </div>
         </div>

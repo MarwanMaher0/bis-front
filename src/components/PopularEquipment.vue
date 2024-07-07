@@ -16,7 +16,7 @@
           </div>
         </div>
       </div>
-      <router-link to="/all-equipment">
+      <router-link to="/AllEquipment">
         <div class="flex justify-center mt-8">
           <button
             class="bg-yellow-500 text-black hover:bg-black hover:text-white py-2 px-8 rounded-full transition-colors duration-300">

@@ -24,11 +24,7 @@
                         </div>
                         <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                         <div class="mt-4 flex flex-col items-start">
-                            <div class="flex items-center space-x-4 mb-4">
-                                <label for="quantity" class="text-lg font-bold">Quantity:</label>
-                                <input id="quantity" type="number" v-model="quantity" min="1"
-                                    class="w-16 text-center bg-gray-200 p-2 rounded" />
-                            </div>
+
                             <div class="flex justify-between items-center w-full">
                                 <button class="bg-yellow-500 text-black py-2 px-4 rounded hover:bg-yellow-600"
                                     @click="addToCart">

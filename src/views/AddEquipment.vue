@@ -71,16 +71,19 @@
                 </Form>
             </div>
         </div>
+        <paymant v-if="showModal" @close="closeModal" />
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import EquipmentSaidBar from '@/components/EquipmentSaidBar.vue';
 import { useForm, Field, ErrorMessage } from 'vee-validate';
 import { required, numeric, min_value } from '@vee-validate/rules';
 import { defineRule } from 'vee-validate';
+import paymant from '@/components/paymantPopular.vue';
+import { useRoute } from 'vue-router';
 
 defineRule('required', required);
 defineRule('numeric', numeric);
@@ -99,7 +102,9 @@ const formData = ref({
     height: null,
     weight: null,
 });
-
+const showModal = ref(false);
+const isEditMode = ref(false);
+const equipmentId = ref(null);  // Added field to store the equipment ID
 const images = ref([{ src: null, file: null }]);
 
 const previewImage = (event, index) => {
@@ -127,7 +132,7 @@ const handleFileUpload = (event) => {
     formData.value.contractImage = file;  // Assign the file to contractImage
 };
 
-const { handleSubmit, resetForm } = useForm();
+const { handleSubmit, resetForm, setValues } = useForm();
 
 const submitForm = handleSubmit(async () => {
     const form = new FormData();
@@ -152,18 +157,40 @@ const submitForm = handleSubmit(async () => {
         form.append('Image', images.value[0].file);
     }
 
+    if (isEditMode.value && equipmentId.value) {
+        form.append('id', equipmentId.value);  // Append the equipment ID to the form data
+    }
+
     // Log form data for debugging
     for (let [key, value] of form.entries()) {
         console.log(`${key}: ${value}`);
     }
 
     try {
-        const response = await axios.post('/api/Machine', form, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
+        let response;
+
+        if (isEditMode.value && equipmentId.value) {
+            response = await axios.patch(`/api/Machine/PatchMachine/${equipmentId.value}`, form, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+
+                }
+            });
+        } else {
+            response = await axios.post('/api/Machine', form, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+
+                }
+            });
+        }
         console.log('Response:', response.data);
+
+        // Show payment modal if PoPular is selected
+        if (formData.value.poPular) {
+            showModal.value = true;
+        }
+
         // Handle success (e.g., notify the user, clear the form, etc.)
         resetForm();
     } catch (error) {
@@ -178,7 +205,39 @@ const submitForm = handleSubmit(async () => {
         }
     }
 });
+
+
+const closeModal = () => {
+    showModal.value = false;
+};
+
+const route = useRoute();
+onMounted(() => {
+    if (route.query.equipmentData) {
+        const equipmentData = JSON.parse(route.query.equipmentData);
+        formData.value = {
+            machineModel: equipmentData.machineModel,
+            machineName: equipmentData.machineName,
+            contractImage: null,
+            price: equipmentData.priceOfRent,
+            description: equipmentData.description,
+            categoryId: equipmentData.categoryId,
+            poPular: equipmentData.poPular,
+            capacity: equipmentData.capacity,
+            width: equipmentData.width,
+            height: equipmentData.height,
+            weight: equipmentData.weight,
+        };
+        images.value = [{
+            src: equipmentData.imageUrl,
+            file: null
+        }];
+        isEditMode.value = true;
+        equipmentId.value = equipmentData.id;  // Store the equipment ID
+    }
+});
 </script>
+
 
 <style scoped>
 @import url('@/assets/AddEquipment.css');

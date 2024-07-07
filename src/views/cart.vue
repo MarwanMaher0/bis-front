@@ -10,7 +10,6 @@
                         <tr>
                             <th class="p-4 rounded-tl-2xl">Product</th>
                             <th class="p-4">Price</th>
-                            <th class="p-4 text-center ">Quantity</th>
                             <th class="p-4 text-center rounded-tr-2xl">Remove all <button @click="removeItem(item.id)"
                                     class="text-red-600 hover:underline">
                                     <closeIcon class="fill-red-600" />
@@ -25,9 +24,7 @@
                                 <span>{{ item.name }}</span>
                             </td>
                             <td class="p-4">{{ item.price }}</td>
-                            <td class="p-4 text-center">
-                                {{ item.quantity }}
-                            </td>
+
                             <td class="p-4 text-center">
                                 <button @click="removeItem(item.id)" class="text-red-600 hover:underline">
                                     <closeIcon class="fill-red-600" />
@@ -161,21 +158,21 @@
                             <button class="text-red-600 hover:underline" @click="removeItem(item.id)">
                                 <IconTrash />
                             </button>
-                            <button class="text-green-600 hover:underline">+</button>
+                            <button class="text-green-600 hover:underline" @click="addItem(item.id)">+</button>
                         </div>
                     </div>
                     <div class="mt-4 space-y-4">
                         <div class="flex justify-between">
                             <h5>Subtotal:</h5>
-                            <h5>$525</h5>
+                            <h5>${{ subtotal.toFixed(2) }}</h5>
                         </div>
                         <div class="flex justify-between">
-                            <h5>Commission:</h5>
+                            <h5>Insurance:</h5>
                             <h5>+ 10%</h5>
                         </div>
                         <div class="flex justify-between">
                             <h5>Total Cost:</h5>
-                            <h5>$577.5</h5>
+                            <h5>${{ totalCost.toFixed(2) }}</h5>
                         </div>
                     </div>
                     <div class="mt-4 flex justify-between space-x-4">
@@ -184,8 +181,8 @@
                         <button @click="finishReservation()"
                             class="px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-400">Finish</button>
                     </div>
-
                 </div>
+
 
             </div>
         </div>
@@ -364,17 +361,17 @@ function updateOptions() {
     const deliveryType = document.getElementById('deliveryType').value;
     if (deliveryType === 'fast') {
         document.getElementById('deliveryTime').value = '1-2 days';
-        document.getElementById('cost').value = '£20.00';
+        document.getElementById('cost').value = '£200.00';
         document.getElementById('DeliveryName').value = 'Express Delivery';
         selectedDeliveryMethodId.value = 1;
     } else if (deliveryType === 'medium') {
         document.getElementById('deliveryTime').value = '3-5 days';
-        document.getElementById('cost').value = '£10.00';
+        document.getElementById('cost').value = '£100.00';
         document.getElementById('DeliveryName').value = 'Standard Delivery';
         selectedDeliveryMethodId.value = 2;
     } else if (deliveryType === 'slow') {
         document.getElementById('deliveryTime').value = '5-7 days';
-        document.getElementById('cost').value = '£5.00';
+        document.getElementById('cost').value = '£50.00';
         document.getElementById('DeliveryName').value = 'Economy Delivery';
         selectedDeliveryMethodId.value = 3;
     } else if (deliveryType === 'free') {
@@ -443,6 +440,15 @@ const fetchCartItems = () => {
             });
     }
 };
+
+const subtotal = computed(() => {
+    return cartItems.value.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+});
+
+const totalCost = computed(() => {
+    return subtotal.value * 1.1; // Adding 10% commission
+});
+
 
 onMounted(() => {
     fetchCartItems();
