@@ -23,7 +23,7 @@
                             <td class="p-4">{{ item.price }}</td>
 
                             <td class="p-4 text-center">
-                                <button @click="removeItem(item.id)" class="text-red-600 hover:underline">
+                                <button @click="removeItem(item.machineId)" class="text-red-600 hover:underline">
                                     <closeIcon class="fill-red-600" />
                                 </button>
                             </td>
@@ -335,14 +335,14 @@ async function finishReservation() {
     }
 }
 
-async function removeItem(id) {
+async function removeItem(machineId) {
     const basketId = localStorage.getItem('basketId');
     if (!basketId) return;
 
     try {
         const response = await axios.get(`/api/Baskets/${basketId}`);
         let basketItems = response.data.items;
-        basketItems = basketItems.filter(item => item.id !== id);
+        basketItems = basketItems.filter(item => item.machineId !== machineId);
         const updateResponse = await axios.put(`/api/Baskets/${basketId}`, {
             id: basketId,
             items: basketItems
@@ -353,6 +353,7 @@ async function removeItem(id) {
         console.error('Failed to remove item from cart', error.response ? error.response.data : error);
     }
 }
+
 
 function updateOptions() {
     const deliveryType = document.getElementById('deliveryType').value;
