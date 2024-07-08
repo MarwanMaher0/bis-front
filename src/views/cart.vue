@@ -10,7 +10,7 @@
                         <tr>
                             <th class="p-4 rounded-tl-2xl">Product</th>
                             <th class="p-4">Price</th>
-                            <th class="p-4 text-center rounded-tr-2xl">Remove all </th>
+                            <th class="p-4 text-center rounded-tr-2xl">Remove </th>
 
                         </tr>
                     </thead>
