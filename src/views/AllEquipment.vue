@@ -18,30 +18,55 @@
     </div>
 </template>
 
-
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import axios from 'axios';
 
+const route = useRoute();
 const equipment = ref([]);
+
+const mapMachineData = (machine) => ({
+    ...machine,
+    imageUrl: (machine.imageUrl || machine.machineImage).replace('https://localhost:7021/', axios.defaults.baseURL),
+    contractImageUrl: (machine.contractImageUrl || machine.machineContractr).replace('https://localhost:7021/', axios.defaults.baseURL),
+    description: machine.description || '',
+    categoryId: machine.categoryId || 0,
+});
+
+const getMachinesInCategory = async (categoryId) => {
+    try {
+        const response = await axios.get(`/api/Machine/GetMachinesInCategory?Id=${categoryId}`);
+        equipment.value = response.data.map(mapMachineData);
+    } catch (error) {
+        console.error('Error fetching machines in category:', error);
+    }
+};
 
 const getAllMachines = async () => {
     try {
         const response = await axios.get('/api/Machine/GetAllMachines');
-        equipment.value = response.data.map(machine => ({
-            ...machine,
-            imageUrl: machine.imageUrl.replace('https://localhost:7021/', axios.defaults.baseURL),
-            contractImageUrl: machine.contractImageUrl.replace('https://localhost:7021/', axios.defaults.baseURL),
-        }));
-        console.log(equipment.value);
+        equipment.value = response.data.map(mapMachineData);
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching all machines:', error);
     }
 };
 
+const fetchMachines = async () => {
+    const categoryId = route.query.categoryId;
+    if (categoryId) {
+        await getMachinesInCategory(categoryId);
+    } else {
+        await getAllMachines();
+    }
+};
 
 onMounted(() => {
-    getAllMachines();
+    fetchMachines();
+});
+
+watch(() => route.query.categoryId, async (newCategoryId) => {
+    await fetchMachines();
 });
 </script>
 

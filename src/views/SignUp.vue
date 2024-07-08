@@ -75,6 +75,7 @@ const signup = () => {
             localStorage.setItem('token', response.data.token);
             localStorage.removeItem('basketId');
             localStorage.setItem('basketId', form.value.email);
+            localStorage.setItem('role', form.value.role);
 
 
             error.value = '';
@@ -93,6 +94,7 @@ const creatBaskets = () => {
     })
         .then(response => {
             router.push('/');
+
 
             error.value = '';
         })

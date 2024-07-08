@@ -19,7 +19,8 @@
                                 </div>
                                 <div @click="addImageUpload"
                                     class="w-10 h-10 bg-yellow-400 flex items-center justify-center rounded-full cursor-pointer">
-                                    +</div>
+                                    +
+                                </div>
                             </div>
                             <div class="flex flex-col space-y-4">
                                 <Field name="machineName" :rules="required" v-model="formData.machineName" as="input"
@@ -63,7 +64,7 @@
                             </div>
                             <div class="flex items-baseline gap-3">
                                 <input type="checkbox" v-model="formData.poPular" id="popular" />
-                                <label for="popular">Add to popular equipment page, commission: $100</label>
+                                <label for="popular">Add to popular equipment page, commission: $300</label>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
@@ -237,7 +238,6 @@ onMounted(() => {
     }
 });
 </script>
-
 
 <style scoped>
 @import url('@/assets/AddEquipment.css');

@@ -24,9 +24,9 @@
                         </div>
                         <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                         <div class="mt-4 flex flex-col items-start">
-
                             <div class="flex justify-between items-center w-full">
-                                <button class="bg-yellow-500 text-black py-2 px-4 rounded hover:bg-yellow-600"
+                                <button v-if="!showlink"
+                                    class="bg-yellow-500 text-black py-2 px-4 rounded hover:bg-yellow-600"
                                     @click="addToCart">
                                     BOOK NOW
                                 </button>
@@ -40,6 +40,8 @@
     </div>
 </template>
 
+
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -47,18 +49,28 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
 import axios from 'axios';
 
+const baseURL = axios.defaults.baseURL;
 const route = useRoute();
 const router = useRouter();
 const id = route.params.id;
 const machine = ref({});
 const machineImages = ref([]);
 const quantity = ref(1); // Quantity state
+const Role = localStorage.getItem("role");
+
+const showlink = Role === "Lessor";
 
 const fetchMachineDetails = async () => {
     try {
         const response = await axios.get(`api/Machine/${id}/`);
         machine.value = response.data;
-        machineImages.value = response.data.images || [];
+
+        // Update the image URLs
+        machine.value.imageUrl = machine.value.imageUrl.replace('https://localhost:7021/', baseURL);
+        machine.value.contractImageUrl = machine.value.contractImageUrl.replace('https://localhost:7021/', baseURL);
+
+        // Populate machineImages array
+        machineImages.value = [machine.value.imageUrl, machine.value.contractImageUrl];
     } catch (error) {
         console.error(error);
     }
@@ -67,6 +79,7 @@ const fetchMachineDetails = async () => {
 onMounted(() => {
     fetchMachineDetails();
 });
+
 
 const addToCart = async () => {
     const basketId = localStorage.getItem("basketId");
@@ -107,5 +120,4 @@ const addToCart = async () => {
         console.error('Failed to add item to cart', error.response ? error.response.data : error);
     }
 };
-
 </script>

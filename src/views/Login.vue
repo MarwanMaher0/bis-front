@@ -56,6 +56,8 @@ const login = async () => {
         localStorage.setItem('token', response.data.token);
         localStorage.removeItem('basketId');
         localStorage.setItem('basketId', form.value.email);
+        localStorage.setItem('role', form.value.role);
+
         router.push('/');
         error.value = '';
     } catch (err) {
