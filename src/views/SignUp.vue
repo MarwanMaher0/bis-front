@@ -79,11 +79,9 @@ const signup = () => {
 
 
             error.value = '';
-            if (form.value.role === 'Lessee') {
-
+            if (localStorage.getItem('role') === 'Lessee') {
                 creatBaskets();
-            }
-            else {
+            } else {
                 router.push('/');
             }
         })
