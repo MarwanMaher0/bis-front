@@ -79,7 +79,13 @@ const signup = () => {
 
 
             error.value = '';
-            creatBaskets();
+            if (form.value.role === 'Lessee') {
+
+                creatBaskets();
+            }
+            else {
+                router.push('/');
+            }
         })
         .catch(error => {
             error.value = 'Signup failed. Please try again.';
