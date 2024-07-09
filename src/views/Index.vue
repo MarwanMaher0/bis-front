@@ -72,7 +72,7 @@
 import { ref } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
-// import { Navigation, Autoplay } from 'swiper';
+
 import validImage from '@/assets/images/homepage/istockphoto-1387256339-1024x1024.webp';
 import twoEquipment from '@/assets/images/homepage/twoEqipment.jpg';
 import plasticInjection from '@/assets/images/homepage/plastic-injection-molding-factory-generative-ai_547471-983.jpg';
@@ -80,7 +80,6 @@ import plasticInjection from '@/assets/images/homepage/plastic-injection-molding
 import PopularEquipment from '@/components/PopularEquipment.vue';
 import TrustedCompanies from '@/components/TrustedCompanies.vue';
 
-// SwiperCore.use([Navigation, Autoplay]);
 
 
 const activeSlide = ref(0);

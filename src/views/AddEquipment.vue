@@ -35,11 +35,10 @@
                                 <Field name="categoryId" :rules="required" v-model="formData.categoryId" as="select"
                                     class="form-control p-[10px]">
                                     <option value="" disabled selected hidden>Equipment Category</option>
-                                    <option value="1">Agriculture</option>
-                                    <option value="2">Industrial</option>
-                                    <option value="3">Electronics</option>
-                                    <option value="4">Cosmetics</option>
-                                    <option value="5">Other</option>
+                                    <option value="5">Agriculture</option>
+                                    <option value="6">Industrial</option>
+                                    <option value="7">Electronics</option>
+                                    <option value="8">Cosmetics</option>
                                 </Field>
                                 <ErrorMessage name="categoryId" />
                                 <Field name="weight" :rules="required | numeric" v-model="formData.weight" as="input"

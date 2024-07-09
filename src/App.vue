@@ -1,3 +1,16 @@
+<template>
+  <div>
+    <Navbar :isTransparent="isTransparent" />
+    <div class="min-h-screen">
+      <RouterView />
+    </div>
+    <FooterComponent />
+    <div v-if="loadingState.isLoading"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
+      <div class="loader"></div>
+    </div>
+  </div>
+</template>
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
@@ -31,19 +44,6 @@ watch(route, () => {
 });
 </script>
 
-<template>
-  <div>
-    <Navbar :isTransparent="isTransparent" />
-    <div class="min-h-screen">
-      <RouterView />
-    </div>
-    <FooterComponent />
-    <div v-if="loadingState.isLoading"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
-      <div class="loader"></div>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 /* Loader styling */

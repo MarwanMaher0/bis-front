@@ -10,7 +10,7 @@
                         <div class="machine-details">
                             <div class="machine-name">{{ machine.machineName }}</div>
                             <div class="machine-id">{{ machine.machineId }}</div>
-                            <div class="machine-owner">{{ machine.lessorName }}</div>
+                            <div class="machine-owner">{{ machine.startDate }}/{{ machine.endDate }}</div>
                         </div>
                     </div>
                 </div>
@@ -34,6 +34,8 @@ const fetchRentedMachines = async () => {
         rentedMachines.value = response.data.map(machine => ({
             machineId: machine.machineId,
             machineName: machine.machineName,
+            startDate: machine.startDate,
+            endDate: machine.endDate,
             imageUrl: machine.imageUrl.replace('https://localhost:7021/', baseURL),
             lessorName: "Unknown", // Replace with actual field if present in the response
         }));

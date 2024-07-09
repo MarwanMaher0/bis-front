@@ -9,6 +9,18 @@ const router = createRouter({
       component: () => import("../views/Login.vue"),
     },
     {
+      path: "/SignUp",
+      name: "SignUp",
+      component: () => import("../views/SignUp.vue"),
+    },
+
+    {
+      path: "/",
+      name: "Index",
+      component: () => import("../views/Index.vue"),
+    },
+
+    {
       path: "/AddEquipment",
       name: "AddEquipment",
       component: () => import("../views/AddEquipment.vue"),
@@ -38,25 +50,11 @@ const router = createRouter({
       name: "Equipments",
       component: () => import("../views/Equipments.vue"),
     },
-    {
-      path: "/",
-      name: "Index",
-      component: () => import("../views/Index.vue"),
-    },
+
     {
       path: "/LessorOrder",
       name: "LessorOrder",
       component: () => import("../views/LessorOrder.vue"),
-    },
-    {
-      path: "/Rigester",
-      name: "Rigester",
-      component: () => import("../views/Rigester.vue"),
-    },
-    {
-      path: "/SignUp",
-      name: "SignUp",
-      component: () => import("../views/SignUp.vue"),
     },
   ],
 });
