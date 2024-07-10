@@ -50,7 +50,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const form = ref({
-    role: 'Lessor',
+    role: 'Lassor',
     email: '',
     displayName: '',
     phoneNumber: '',

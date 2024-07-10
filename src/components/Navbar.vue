@@ -88,7 +88,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 import IconShoppingCart from '@/components/icons/icon-shopping-cart.vue';
@@ -102,10 +102,10 @@ const isNavbarOpen = ref(false);
 const isDropdownOpen = ref(false);
 const isRegisterDropdownOpen = ref(false);
 const categories = ref([]);
-const Role = localStorage.getItem("role");
+const Role = ref(localStorage.getItem("role"));
 
-const showlink = ref(Role === "Lessor" ? true : false);
-const profileRoute = computed(() => (showlink.value ? '/Equipments' : '/LessorOrder'));
+const showlink = ref(Role.value === "Lassor");
+const profileRoute = computed(() => (showlink.value ? '/Equipments' : '/LassorOrder'));
 
 const toggleNavbar = () => {
     isNavbarOpen.value = !isNavbarOpen.value;
@@ -162,8 +162,22 @@ const signOut = async () => {
     }
 };
 
+const updateRole = () => {
+    const newRole = localStorage.getItem("role");
+    if (Role.value !== newRole) {
+        Role.value = newRole;
+        showlink.value = Role.value === "Lassor";
+    }
+};
+
+let roleCheckInterval = null;
 onMounted(() => {
     fetchCategories();
+    roleCheckInterval = setInterval(updateRole, 1000);  // Poll every second
+});
+
+onUnmounted(() => {
+    clearInterval(roleCheckInterval);
 });
 </script>
 

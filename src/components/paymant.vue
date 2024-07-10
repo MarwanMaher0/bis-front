@@ -105,22 +105,19 @@ const nextStep = () => {
 
 const id = ref(null);
 
-async function removeItem() {
+async function clearBasket() {
     const basketId = localStorage.getItem('basketId');
     if (!basketId) return;
 
     try {
-        const response = await axios.get(`/api/Baskets/${basketId}`);
-        let basketItems = response.data.items;
-        basketItems = basketItems.filter(item => item.id !== id.value);
-        const updateResponse = await axios.put(`/api/Baskets/${basketId}`, {
+        const response = await axios.put(`/api/Baskets/${basketId}`, {
             id: basketId,
-            items: basketItems
+            items: []
         });
-        props.cartItems = basketItems;
-        console.log('Successfully removed item from cart:', updateResponse.data);
+        props.cartItems.splice(0, props.cartItems.length); // Clear the cartItems array
+        console.log('Successfully cleared the basket:', response.data);
     } catch (error) {
-        console.error('Failed to remove item from cart', error.response ? error.response.data : error);
+        console.error('Failed to clear the basket', error.response ? error.response.data : error);
     }
 }
 
@@ -133,9 +130,9 @@ const postPay = () => {
     })
         .then(response => {
             console.log('Payment successful:', response.data);
-            emit('finish', response.data); // Emit finish event with response data
-            removeItem();
-            router.push("/LessorOrder");
+            clearBasket();
+            closeModal();
+            router.push("/LassorOrder");
         })
         .catch(error => {
             console.error('Payment failed:', error);

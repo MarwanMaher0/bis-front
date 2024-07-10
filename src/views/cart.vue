@@ -335,24 +335,7 @@ async function finishReservation() {
     }
 }
 
-async function removeItem(machineId) {
-    const basketId = localStorage.getItem('basketId');
-    if (!basketId) return;
 
-    try {
-        const response = await axios.get(`/api/Baskets/${basketId}`);
-        let basketItems = response.data.items;
-        basketItems = basketItems.filter(item => item.machineId !== machineId);
-        const updateResponse = await axios.put(`/api/Baskets/${basketId}`, {
-            id: basketId,
-            items: basketItems
-        });
-        cartItems.value = basketItems;
-        console.log('Successfully removed item from cart:', updateResponse.data);
-    } catch (error) {
-        console.error('Failed to remove item from cart', error.response ? error.response.data : error);
-    }
-}
 
 
 function updateOptions() {
@@ -418,6 +401,11 @@ const checkout = () => {
             }
         })
         .catch(error => {
+            // Accessing the error response and message
+            const errorMessage = error.response && error.response.data && error.response.data.message
+                ? error.response.data.message
+                : 'An error occurred while creating the order';
+            alert('Error creating order: ' + errorMessage);
             console.error('Error creating order:', error);
         });
 }
@@ -438,7 +426,24 @@ const fetchCartItems = () => {
             });
     }
 };
+async function removeItem(machineId) {
+    const basketId = localStorage.getItem('basketId');
+    if (!basketId) return;
 
+    try {
+        const response = await axios.get(`/api/Baskets/${basketId}`);
+        let basketItems = response.data.items;
+        basketItems = basketItems.filter(item => item.machineId !== machineId);
+        const updateResponse = await axios.put(`/api/Baskets/${basketId}`, {
+            id: basketId,
+            items: basketItems
+        });
+        cartItems.value = basketItems;
+        console.log('Successfully removed item from cart:', updateResponse.data);
+    } catch (error) {
+        console.error('Failed to remove item from cart', error.response ? error.response.data : error);
+    }
+}
 const subtotal = computed(() => {
     return cartItems.value.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 });

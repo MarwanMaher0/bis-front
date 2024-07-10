@@ -3,12 +3,7 @@
         <h1 class="text-2xl font-bold mb-6 text-center">Login</h1>
         <form @submit.prevent="login">
             <div class="mb-4">
-                <label for="role" class="block text-gray-700 font-semibold mb-2">Role:</label>
-                <select id="role" v-model="form.role" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                    <option value="Lessor">marchant</option>
-                    <option value="Lessee">user</option>
-                </select>
+
             </div>
             <div class="mb-4">
                 <label for="email" class="block text-gray-700 font-semibold mb-2">Email:</label>
@@ -33,11 +28,12 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import e from 'cors';
 
 const router = useRouter();
 
 const form = ref({
-    role: 'Lessor',
+    role: 'Lassor',
     email: '',
     password: ''
 });
@@ -56,12 +52,12 @@ const login = async () => {
         localStorage.setItem('token', response.data.token);
         localStorage.removeItem('basketId');
         localStorage.setItem('basketId', form.value.email);
-        localStorage.setItem('role', form.value.role);
+        localStorage.setItem('role', response.data.role);
 
         router.push('/');
         error.value = '';
     } catch (err) {
-        error.value = 'Login failed. Please try again.';
+        error.value = err.response.data.message;
         success.value = '';
     }
 };

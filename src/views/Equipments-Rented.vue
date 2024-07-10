@@ -28,7 +28,7 @@ const rentedMachines = ref([]);
 
 const fetchRentedMachines = async () => {
     try {
-        const response = await axios.get('/api/Machine/GetRentedMachinesForLessor');
+        const response = await axios.get('/api/Machine/GetRentedMachinesForLassor');
         const baseURL = axios.defaults.baseURL || 'https://your-base-url.com/'; // Replace with your actual base URL
 
         rentedMachines.value = response.data.map(machine => ({
@@ -37,7 +37,7 @@ const fetchRentedMachines = async () => {
             startDate: machine.startDate,
             endDate: machine.endDate,
             imageUrl: machine.imageUrl.replace('https://localhost:7021/', baseURL),
-            lessorName: "Unknown", // Replace with actual field if present in the response
+            LassorName: "Unknown", // Replace with actual field if present in the response
         }));
     } catch (error) {
         console.error('Error fetching rented machines:', error);

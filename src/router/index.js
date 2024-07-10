@@ -52,9 +52,9 @@ const router = createRouter({
     },
 
     {
-      path: "/LessorOrder",
-      name: "LessorOrder",
-      component: () => import("../views/LessorOrder.vue"),
+      path: "/LassorOrder",
+      name: "LassorOrder",
+      component: () => import("../views/LassorOrder.vue"),
     },
   ],
 });

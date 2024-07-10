@@ -7,8 +7,7 @@
                     <div class="md:w-1/2">
                         <swiper :slides-per-view="1" :loop="true" :autoplay="{ delay: 2000 }" pagination>
                             <swiper-slide v-for="(image, index) in machineImages" :key="index">
-                                <img :src="image" class="block w-full h-auto object-cover"
-                                    :alt="`Equipment ${index + 1}`">
+                                <img :src="image" class="block w-full max-h-[480px] " :alt="`Equipment ${index + 1}`">
                             </swiper-slide>
                         </swiper>
                     </div>
@@ -58,7 +57,7 @@ const machineImages = ref([]);
 const quantity = ref(1); // Quantity state
 const Role = localStorage.getItem("role");
 
-const showlink = Role === "Lessor";
+const showlink = Role === "Lassor";
 
 const fetchMachineDetails = async () => {
     try {
