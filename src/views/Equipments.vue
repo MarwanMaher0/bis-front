@@ -3,7 +3,7 @@
         <div class="flex h-screen">
             <EquipmentSideBar class="p-4 pt-8" />
             <div class="w-3/4 p-6 bg-white">
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-3 gap-4">
                     <EquipmentCard v-for="equipment in equipments" :key="equipment.id" :equipment="equipment"
                         @equipmentDeleted="fetchEquipments" :fetchEquipments="fetchEquipments" />
                 </div>
