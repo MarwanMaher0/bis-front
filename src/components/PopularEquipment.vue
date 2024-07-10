@@ -4,9 +4,8 @@
       <h1 class="text-white text-3xl text-center mb-8">Popular Equipment</h1>
       <div class="grid grid-cols-3 gap-5">
         <div class="h-[300px]" v-for="(item, index) in equipment" :key="index">
-          <div
-            class="relative h-[300px] overflow-hidden rounded-lg transform transition-transform duration-500 hover:scale-105">
-            <img :src="item.imageUrl" alt="Equipment" class="object-cover">
+          <div class="relative h-[300px]  rounded-lg transform transition-transform duration-500 hover:scale-105">
+            <img :src="item.imageUrl" alt="Equipment" class="h-full w-full">
             <div
               class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4 text-white flex flex-col justify-end">
               <p class="text-sm"><i class="fa-regular fa-compass"></i> {{ item.machineName }}</p>
