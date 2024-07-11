@@ -2,7 +2,7 @@
     <div class=" min-h-screen pt-36 bg-[#646752] text-white">
         <h1 class="text-4xl mt-5 py-6 text-center text-antiquewhite">Equipment Description Details</h1>
         <div class="flex flex-col items-center">
-            <div class="max-w-full bg-[#faebd6] flex items-start">
+            <div class="max-w-full min-w-full bg-[#faebd6] flex items-start">
                 <div class="md:w-1/2">
                     <swiper :slides-per-view="1" :loop="true" :autoplay="{ delay: 2000 }" pagination>
                         <swiper-slide v-for="(image, index) in machineImages" :key="index">
