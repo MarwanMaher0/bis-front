@@ -30,7 +30,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <button @click="showModal = true"
+                <button v-if="disablcheckout" @click="showModal = true"
                     class="px-4 py-2 text-white bg-yellow-600 rounded hover:bg-yellow-500">Checkout</button>
             </div>
 
@@ -409,7 +409,7 @@ const checkout = () => {
             console.error('Error creating order:', error);
         });
 }
-
+const disablcheckout = ref(true);
 
 const fetchCartItems = () => {
     const basketId = localStorage.getItem('basketId');
@@ -420,6 +420,9 @@ const fetchCartItems = () => {
                     item.picturUrl = item.picturUrl.replace('https://localhost:7021/', axios.defaults.baseURL);
                     return item;
                 });
+                if (cartItems.value.length === 0) {
+                    disablcheckout.value = false;
+                }
             })
             .catch(error => {
                 console.error('Error fetching basket items:', error);
@@ -438,7 +441,9 @@ async function removeItem(machineId) {
             id: basketId,
             items: basketItems
         });
+
         cartItems.value = basketItems;
+
         console.log('Successfully removed item from cart:', updateResponse.data);
     } catch (error) {
         console.error('Failed to remove item from cart', error.response ? error.response.data : error);
