@@ -406,7 +406,7 @@ const checkout = () => {
                 ? error.response.data.message
                 : 'An error occurred while creating the order';
             alert('Error creating order: ' + errorMessage);
-            console.error('Error creating order:', error);
+
         });
 }
 const disablcheckout = ref(true);
@@ -446,7 +446,7 @@ async function removeItem(machineId) {
 
         console.log('Successfully removed item from cart:', updateResponse.data);
     } catch (error) {
-        console.error('Failed to remove item from cart', error.response ? error.response.data : error);
+        alert('Failed to remove item from cart', error.response ? error.response.data : error);
     }
 }
 const subtotal = computed(() => {
