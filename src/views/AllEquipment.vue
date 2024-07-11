@@ -7,7 +7,7 @@
                     <router-link :to="{ name: 'Description', params: { id: item.id } }">
                         <img :src="item.imageUrl" :alt="item.machineName" class="h-48 w-full object-cover" />
                         <div class="p-4">
-                            <p class="text-sm text-gray-600 mb-1">{{ item.category || 'No Category' }}</p>
+                            <p class="text-sm text-gray-600 mb-1">{{ item.machineModel || 'No Machine Model' }}</p>
                             <h5 class="text-lg font-semibold mb-2">{{ item.machineName }}</h5>
                             <p class="text-gray-800 font-bold">${{ item.priceOfRent }} per day</p>
                         </div>
