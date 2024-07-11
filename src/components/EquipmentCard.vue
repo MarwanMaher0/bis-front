@@ -2,7 +2,7 @@
     <div class="border p-4 rounded-lg shadow-md">
         <h2 class="bg-yellow-600 text-white p-2 text-center rounded-t-lg">{{ equipment.name }}</h2>
         <div class="mt-4 flex flex-col items-center">
-            <img :src="equipment.image" alt="Equipment Image" class="w-full   mb-4 rounded-lg" />
+            <img :src="equipment.image" alt="Equipment Image" class="w-full max-h-40   mb-4 rounded-lg" />
             <div class="flex gap-5">
                 <button @click="editEquipment"
                     class="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center hover:bg-blue-700 transition duration-300">
