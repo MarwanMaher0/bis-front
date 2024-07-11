@@ -4,7 +4,8 @@
         <div class="flex flex-col items-center">
             <div class="max-w-full min-w-full bg-[#faebd6] flex items-start">
                 <div class="md:w-1/2">
-                    <swiper :slides-per-view="1" :loop="true" :autoplay="{ delay: 2000 }" pagination>
+                    <swiper :loop="true" :modules="[Autoplay, Navigation, Pagination]" :slides-per-view="1"
+                        :autoplay="{ delay: 1000 }">
                         <swiper-slide v-for="(image, index) in machineImages" :key="index">
                             <img :src="image" class="block w-full max-h-[480px]" :alt="'Equipment ' + (index + 1)">
                         </swiper-slide>
@@ -82,7 +83,8 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import 'swiper/swiper-bundle.css';
+import { Navigation, Pagination, Autoplay } from 'swiper';
+import 'swiper/css';
 import axios from 'axios';
 
 const baseURL = axios.defaults.baseURL;
