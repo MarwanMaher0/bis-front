@@ -85,6 +85,7 @@ import { required, numeric, min_value } from '@vee-validate/rules';
 import { defineRule } from 'vee-validate';
 import paymant from '@/components/paymantPopular.vue';
 import { useRoute } from 'vue-router';
+import e from 'cors';
 
 defineRule('required', required);
 defineRule('numeric', numeric);
@@ -109,6 +110,7 @@ const equipmentId = ref(null);  // Field to store the equipment ID
 const images = ref([{ src: null, file: null }]);
 const existingContractImageUrl = ref('');
 const existingImageUrl = ref('');
+const wasPoPularInitially = ref(false);
 
 const previewImage = (event, index) => {
     const input = event.target;
@@ -196,7 +198,7 @@ const submitForm = handleSubmit(async () => {
         console.log('Response:', response.data);
 
         // Show payment modal if PoPular is selected
-        if (formData.value.poPular) {
+        if ((formData.value.poPular && !isEditMode.value) || (isEditMode.value && formData.value.poPular && !wasPoPularInitially.value)) {
             showModal.value = true;
         }
 
@@ -244,9 +246,13 @@ onMounted(() => {
         existingImageUrl.value = equipmentData.imageUrl;  // Store existing image URL
         isEditMode.value = true;
         equipmentId.value = equipmentData.id;  // Store the equipment ID
+        wasPoPularInitially.value = equipmentData.popular;
     }
 });
 </script>
+
+
+
 
 
 
