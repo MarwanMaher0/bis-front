@@ -331,7 +331,7 @@ async function finishReservation() {
 
     } catch (error) {
         errorMessage.value = 'Error completing reservation: ' + error.message;
-        console.error('Error completing reservation:', error);
+        alert('missing information');
     }
 }
 
@@ -366,13 +366,13 @@ function updateOptions() {
 const checkout = () => {
     const basketId = localStorage.getItem('basketId');
     if (!basketId || !selectedDeliveryMethodId.value || !selectedStartDate.value || !selectedEndDate.value) {
-        console.error('Missing necessary information for checkout.');
+        alert('Missing necessary information for checkout.');
         return;
     }
 
     // Ensure shippingInfo and its properties are defined before proceeding
     if (!shippingInfo.value || !shippingInfo.value.firstName || !shippingInfo.value.lastName || !shippingInfo.value.city || !shippingInfo.value.street || !shippingInfo.value.country) {
-        console.error('Incomplete shipping information.');
+        alert('Incomplete shipping information.');
         return;
     }
 
