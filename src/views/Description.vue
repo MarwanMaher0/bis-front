@@ -143,7 +143,8 @@ const submitReview = async () => {
         newReview.value.displayName = '';
         newReview.value.comment = '';
     } catch (error) {
-        console.error('Failed to submit review', error.response ? error.response.data : error);
+        alert('you have to rent this equipment to be able to review it');
+
     }
 };
 
