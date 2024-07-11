@@ -425,6 +425,9 @@ const fetchCartItems = () => {
                 }
             })
             .catch(error => {
+                if (cartItems.value.length === 0) {
+                    disablcheckout.value = false;
+                }
                 console.error('Error fetching basket items:', error);
             });
     }
