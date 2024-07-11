@@ -75,6 +75,7 @@
     </div>
 </template>
 
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
@@ -92,7 +93,7 @@ defineRule('min_value', min_value);
 const formData = ref({
     machineModel: '',
     machineName: '',
-    contractImage: null,  // Added field to store contract image file
+    contractImage: null,  // Field to store contract image file
     price: null,
     description: '',
     categoryId: null,
@@ -104,8 +105,10 @@ const formData = ref({
 });
 const showModal = ref(false);
 const isEditMode = ref(false);
-const equipmentId = ref(null);  // Added field to store the equipment ID
+const equipmentId = ref(null);  // Field to store the equipment ID
 const images = ref([{ src: null, file: null }]);
+const existingContractImageUrl = ref('');
+const existingImageUrl = ref('');
 
 const previewImage = (event, index) => {
     const input = event.target;
@@ -150,11 +153,19 @@ const submitForm = handleSubmit(async () => {
     if (formData.value.contractImage) {
         form.append('ContractImage', formData.value.contractImage);  // Append the contract image file
         form.append('ContractImageName', formData.value.contractImage.name);  // Append the contract image name
+    } else if (!isEditMode.value) {
+        // New entries require a contract image
+        alert('Please upload a contract image.');
+        return;
     }
 
     if (images.value.length > 0 && images.value[0].file) {
-        form.append('ImageName', `image01`); // Assuming 'image01' is the intended name
         form.append('Image', images.value[0].file);
+        form.append('ImageName', images.value[0].file.name); // Use the file name
+    } else if (!isEditMode.value) {
+        // New entries require an image
+        alert('Please upload an image.');
+        return;
     }
 
     if (isEditMode.value && equipmentId.value) {
@@ -173,14 +184,12 @@ const submitForm = handleSubmit(async () => {
             response = await axios.patch(`/api/Machine/PatchMachine/${equipmentId.value}`, form, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-
                 }
             });
         } else {
             response = await axios.post('/api/Machine', form, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-
                 }
             });
         }
@@ -206,7 +215,6 @@ const submitForm = handleSubmit(async () => {
     }
 });
 
-
 const closeModal = () => {
     showModal.value = false;
 };
@@ -222,7 +230,7 @@ onMounted(() => {
             price: equipmentData.priceOfRent,
             description: equipmentData.description,
             categoryId: equipmentData.categoryId,
-            poPular: equipmentData.poPular,
+            poPular: equipmentData.popular,
             capacity: equipmentData.capacity,
             width: equipmentData.width,
             height: equipmentData.height,
@@ -232,11 +240,17 @@ onMounted(() => {
             src: equipmentData.imageUrl,
             file: null
         }];
+        existingContractImageUrl.value = equipmentData.contractImageUrl;  // Store existing contract image URL
+        existingImageUrl.value = equipmentData.imageUrl;  // Store existing image URL
         isEditMode.value = true;
         equipmentId.value = equipmentData.id;  // Store the equipment ID
     }
 });
 </script>
+
+
+
+
 
 <style scoped>
 @import url('@/assets/AddEquipment.css');

@@ -33,7 +33,6 @@ import e from 'cors';
 const router = useRouter();
 
 const form = ref({
-    role: 'Lassor',
     email: '',
     password: ''
 });

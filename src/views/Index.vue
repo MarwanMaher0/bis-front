@@ -2,8 +2,8 @@
     <div class="bg-white">
         <!-- Carousel -->
         <div class="relative">
-            <swiper :loop="true" :slides-per-view="1" :autoplay="{ delay: 200 }"
-                class="relative max-h-screen overflow-hidden">
+            <swiper :loop="true" :modules="[Autoplay, Navigation, Pagination]" :slides-per-view="1"
+                :autoplay="{ delay: 1000 }" class="relative max-h-screen overflow-hidden">
                 <swiper-slide>
                     <img :src="validImage" class="object-cover w-full h-full" alt="Top Rated Equipment" />
                     <div
@@ -62,8 +62,6 @@
         </div>
 
         <PopularEquipment />
-
-
         <TrustedCompanies />
     </div>
 </template>
@@ -71,7 +69,8 @@
 <script setup>
 import { ref } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import 'swiper/swiper-bundle.css';
+import { Navigation, Pagination, Autoplay } from 'swiper';
+import 'swiper/css';
 
 import validImage from '@/assets/images/homepage/istockphoto-1387256339-1024x1024.webp';
 import twoEquipment from '@/assets/images/homepage/twoEqipment.jpg';
@@ -79,8 +78,6 @@ import plasticInjection from '@/assets/images/homepage/plastic-injection-molding
 
 import PopularEquipment from '@/components/PopularEquipment.vue';
 import TrustedCompanies from '@/components/TrustedCompanies.vue';
-
-
 
 const activeSlide = ref(0);
 
