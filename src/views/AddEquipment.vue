@@ -37,8 +37,8 @@
                                     <option value="" disabled selected hidden>Equipment Category</option>
                                     <option value="5">Agriculture</option>
                                     <option value="6">Industrial</option>
-                                    <option value="7">Electronics</option>
-                                    <option value="8">Cosmetics</option>
+                                    <option value="7">Cosmetics</option>
+                                    <option value="8">Electronics</option>
                                 </Field>
                                 <ErrorMessage name="categoryId" />
                                 <Field name="weight" :rules="required | numeric" v-model="formData.weight" as="input"
