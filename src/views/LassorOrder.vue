@@ -8,10 +8,8 @@
                     <div v-for="order in orders" :key="order.id" class="order">
 
                         <div class="order-details">
-                            <div class="order-id">Order ID: {{ order.id }}</div>
                             <div class="order-date">Order Date: {{ new Date(order.orderDate).toLocaleDateString() }}
                             </div>
-                            <div class="order-status">Status: {{ order.status }}</div>
                             <div class="order-statu">Order Total: ${{ order.total }}</div>
 
                         </div>
@@ -19,10 +17,8 @@
                             <img :src="item.productUrl" class="machine-image" alt="Product Image" />
                             <div class="machine-details">
                                 <div class="machine-name">{{ item.productName }}</div>
-                                <div class="machine-id">Product ID: {{ item.productId }}</div>
-                                <div class="machine-quantity">Quantity: {{ item.quantity }}</div>
                             </div>
-                            <div class="statu">Price: ${{ item.price }} | Total: ${{ item.quantity * item.price }}</div>
+                            <div class="statu">Price: ${{ item.price }} </div>
                         </div>
 
                     </div>

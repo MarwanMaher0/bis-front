@@ -3,7 +3,7 @@
         <!-- Carousel -->
         <div class="relative">
             <swiper :loop="true" :modules="[Autoplay, Navigation, Pagination]" :slides-per-view="1"
-                :autoplay="{ delay: 1000 }" class="relative max-h-screen overflow-hidden">
+                :autoplay="{ delay: 2000 }" class="relative max-h-screen overflow-hidden">
                 <swiper-slide>
                     <img :src="validImage" class="object-cover w-full h-full" alt="Top Rated Equipment" />
                     <div

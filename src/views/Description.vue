@@ -4,12 +4,16 @@
         <div class="flex flex-col items-center">
             <div class="max-w-full min-w-full bg-[#faebd6] flex items-start">
                 <div class="md:w-1/2">
-                    <swiper :loop="true" :modules="[Autoplay, Navigation, Pagination]" :slides-per-view="1"
+                    <!-- <swiper :loop="true" :modules="[Autoplay, Navigation, Pagination]" :slides-per-view="1"
                         :autoplay="{ delay: 1000 }">
                         <swiper-slide v-for="(image, index) in machineImages" :key="index">
                             <img :src="image" class="block w-full max-h-[480px]" :alt="'Equipment ' + (index + 1)">
                         </swiper-slide>
-                    </swiper>
+                    </swiper> -->
+                    <div class="" v-for="(image, index) in machineImages" :key="index">
+                        <img :src="image" class="block w-full max-h-[480px]" :alt="'Equipment ' + (index + 1)">
+
+                    </div>
                 </div>
                 <div class="w-full h-full md:w-1/2 p-12 flex flex-col justify-center bg-[#f3e3cf] text-black">
                     <h3 class="text-3xl mb-4 font-bold">Description</h3>
@@ -113,7 +117,7 @@ const fetchMachineDetails = async () => {
         machine.value.imageUrl = machine.value.imageUrl.replace('https://localhost:7021/', baseURL);
         machine.value.contractImageUrl = machine.value.contractImageUrl.replace('https://localhost:7021/', baseURL);
 
-        machineImages.value = [machine.value.imageUrl, machine.value.contractImageUrl];
+        machineImages.value = [machine.value.imageUrl];
     } catch (error) {
         console.error(error);
     }
