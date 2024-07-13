@@ -35,6 +35,7 @@ import EquipmentSideBar from '@/components/EquipmentSaidBar.vue';
 
 const orders = ref([]);
 
+
 const fetchOrders = async () => {
     try {
         const response = await axios.get('/api/Orders');
