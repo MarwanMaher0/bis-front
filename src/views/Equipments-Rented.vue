@@ -28,7 +28,7 @@ const rentedMachines = ref([]);
 
 const fetchRentedMachines = async () => {
     try {
-        const response = await axios.get('/api/Machine/GetRentedMachinesForLassor');
+        const response = await axios.get('/api/Machine/GetRentedMachinesForLessor');
         const baseURL = axios.defaults.baseURL || 'https://your-base-url.com/'; // Replace with your actual base URL
 
         rentedMachines.value = response.data.map(machine => ({
