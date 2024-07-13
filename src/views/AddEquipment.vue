@@ -85,11 +85,11 @@ import { required, numeric, min_value } from '@vee-validate/rules';
 import { defineRule } from 'vee-validate';
 import paymant from '@/components/paymantPopular.vue';
 import { useRoute } from 'vue-router';
-import e from 'cors';
 
 defineRule('required', required);
 defineRule('numeric', numeric);
 defineRule('min_value', min_value);
+
 
 const formData = ref({
     machineModel: '',

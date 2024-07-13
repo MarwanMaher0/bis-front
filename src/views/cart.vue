@@ -152,10 +152,9 @@
                     <div class="space-y-4">
                         <div v-for="(item, index) in cartItems" :key="index" class="flex justify-between items-center">
                             <input type="text" class="w-1/2 p-2 border rounded" :value="item.name" readonly>
-                            <button class="text-red-600 hover:underline" @click="removeItem(item.id)">
+                            <button class="text-red-600 hover:underline" @click="removeItem(item.machineId)">
                                 <IconTrash />
                             </button>
-                            <button class="text-green-600 hover:underline" @click="addItem(item.id)">+</button>
                         </div>
                     </div>
                     <div class="mt-4 space-y-4">

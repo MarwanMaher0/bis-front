@@ -50,7 +50,6 @@ const GetAllPopularMachines = async () => {
   }
 };
 
-
 onMounted(() => {
   GetAllPopularMachines();
 });

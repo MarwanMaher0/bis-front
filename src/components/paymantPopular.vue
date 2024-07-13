@@ -85,6 +85,9 @@ const creditCardInfo = ref({
 });
 
 const emit = defineEmits(['close']);
+const closeModal = () => {
+    emit('close');
+};
 
 const postPay = () => {
     axios.post('/api/Payment/PayForPopular', {
