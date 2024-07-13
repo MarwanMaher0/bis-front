@@ -1,7 +1,7 @@
 import axios from "axios";
 import { loadingState } from "@/loading";
 
-axios.defaults.baseURL = "https://ea1a-156-209-183-86.ngrok-free.app/";
+axios.defaults.baseURL = "https://2e42-156-209-183-86.ngrok-free.app/";
 axios.defaults.headers["ngrok-skip-browser-warning"] = "true";
 
 // Existing request interceptor for adding Authorization headers
