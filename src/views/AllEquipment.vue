@@ -7,7 +7,7 @@
                     class="bg-white rounded-lg shadow-none overflow-hidden transition-transform duration-300 hover:shadow-lg hover:scale-105">
 
                     <router-link :to="{ name: 'Description', params: { id: item.id } }">
-                        <img :src="item.imageUrl" :alt="item.machineName" class="h-48 w-full object-cover" />
+                        <img :src="item.imageUrl" :alt="item.machineName" class="h-48 w-full " />
                         <div class="p-4">
                             <p class="text-sm text-gray-600 mb-1">{{ item.machineModel || 'No Machine Model' }}</p>
                             <h5 class="text-lg font-semibold mb-2">{{ item.machineName }}</h5>
