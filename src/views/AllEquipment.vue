@@ -2,7 +2,7 @@
     <div class="bg-[#f8f0e5] h-full p-10 pt-32">
         <div>
             <!-- Equipment Items -->
-            <div class="grid grid-cols-3 gap-10">
+            <div class="grid grid-cols-4 gap-10">
                 <div v-for="item in equipment" :key="item.id"
                     class="bg-white rounded-lg shadow-none overflow-hidden transition-transform duration-300 hover:shadow-lg hover:scale-105">
 
