@@ -7,7 +7,7 @@
     </div>
     <div
       class="bg-white grid grid-cols-5 rounded-[1.8rem]  max-w-full h-auto py-20 px-0 whitespace-nowrap text-0 mt-[-4.5rem] mx-12 border-2 border-black relative z-20">
-      <a v-for="(image, index) in images" :key="index" href="#">
+      <a v-for="(image, index) in images" :key="index" href="https://www.albahar.com/">
         <img :src="image" class="  h-24   mt-[-2.06rem] mx-12">
       </a>
     </div>

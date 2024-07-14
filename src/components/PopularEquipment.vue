@@ -11,7 +11,7 @@
               <div
                 class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4 text-white flex flex-col justify-end">
                 <p class="text-sm"><i class="fa-regular fa-compass"></i> {{ item.machineName }}</p>
-                <h4 class="text-xl font-semibold">{{ item.description }}</h4>
+                <!-- <h4 class="text-xl font-semibold">{{ item.description }}</h4> -->
                 <p class="text-lg">From LE {{ item.priceOfRent }} per day</p>
               </div>
             </div>
