@@ -100,7 +100,7 @@ const machineImages = ref([]);
 const quantity = ref(1);
 const Role = localStorage.getItem("role");
 
-const showlink = Role === "Lassor";
+const showlink = Role === "Lassor" || Role === null;
 
 // Reviews state
 const reviews = ref([]);
