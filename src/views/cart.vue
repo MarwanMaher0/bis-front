@@ -341,17 +341,17 @@ function updateOptions() {
     const deliveryType = document.getElementById('deliveryType').value;
     if (deliveryType === 'fast') {
         document.getElementById('deliveryTime').value = '1-2 days';
-        document.getElementById('cost').value = '£200.00';
+        document.getElementById('cost').value = 'LE200.00';
         document.getElementById('DeliveryName').value = 'Express Delivery';
         selectedDeliveryMethodId.value = 1;
     } else if (deliveryType === 'medium') {
         document.getElementById('deliveryTime').value = '3-5 days';
-        document.getElementById('cost').value = '£100.00';
+        document.getElementById('cost').value = 'LE100.00';
         document.getElementById('DeliveryName').value = 'Standard Delivery';
         selectedDeliveryMethodId.value = 2;
     } else if (deliveryType === 'slow') {
         document.getElementById('deliveryTime').value = '5-7 days';
-        document.getElementById('cost').value = '£50.00';
+        document.getElementById('cost').value = 'LE50.00';
         document.getElementById('DeliveryName').value = 'Economy Delivery';
         selectedDeliveryMethodId.value = 3;
     } else if (deliveryType === 'free') {
