@@ -121,7 +121,7 @@
                 </div>
                 <div class="total-section">
                     <h5>Sub total:</h5>
-                    <h5 id="total-amount">$525</h5>
+                    <h5 id="total-amount">LE525</h5>
                 </div>
                 <div class="total-section">
                     <h5>Commision:</h5>
@@ -134,7 +134,7 @@
                 <hr class="custom-hr">
                 <div class="total-section">
                     <h5>Total:</h5>
-                    <h5 id="total-amount"> $585</h5>
+                    <h5 id="total-amount"> LE585</h5>
                 </div>
                 <div class="Boxbuttons mb-3 d-flex justify-content-evenly">
                     <button type="button" class="btn btn-outline-warning"
@@ -209,17 +209,17 @@ const updateOptions = () => {
     switch (deliveryType) {
         case 'fast':
             deliveryTime = '24 hours';
-            cost = '$200';
+            cost = 'LE200';
             name = 'Fast Express';
             break;
         case 'medium':
             deliveryTime = '3-5 days';
-            cost = '$100';
+            cost = 'LE100';
             name = 'Standard Delivery';
             break;
         case 'slow':
             deliveryTime = '1-2 weeks';
-            cost = '$50';
+            cost = 'LE50';
             name = 'Economy Delivery';
             break;
         case 'free':

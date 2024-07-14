@@ -10,7 +10,7 @@
                         <div class="order-details">
                             <div class="order-date">Order Date: {{ new Date(order.orderDate).toLocaleDateString() }}
                             </div>
-                            <div class="order-statu">Order Total: ${{ order.total }}</div>
+                            <div class="order-statu">Order Total: LE{{ order.total }}</div>
 
                         </div>
                         <div v-for="item in order.items" :key="item.productId" class="machine">
@@ -18,7 +18,7 @@
                             <div class="machine-details">
                                 <div class="machine-name">{{ item.productName }}</div>
                             </div>
-                            <div class="statu">Price: ${{ item.price }} </div>
+                            <div class="statu">Price: LE{{ item.price }} </div>
                         </div>
 
                     </div>

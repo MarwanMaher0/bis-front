@@ -63,7 +63,7 @@
             <div class="mt-6 flex justify-end space-x-4">
                 <button @click="postPay"
                     class="px-6 py-2 text-white bg-yellow-500 rounded-lg hover:bg-yellow-400 transition duration-300 ease-in-out">Pay
-                    $300.00</button>
+                    LE300.00</button>
             </div>
         </div>
     </div>

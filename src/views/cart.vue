@@ -160,7 +160,7 @@
                     <div class="mt-4 space-y-4">
                         <div class="flex justify-between">
                             <h5>Subtotal:</h5>
-                            <h5>${{ subtotal.toFixed(2) }}</h5>
+                            <h5>LE{{ subtotal.toFixed(2) }}</h5>
                         </div>
                         <div class="flex justify-between">
                             <h5>Insurance:</h5>
@@ -168,7 +168,7 @@
                         </div>
                         <div class="flex justify-between">
                             <h5>Total Cost:</h5>
-                            <h5>${{ totalCost.toFixed(2) }}</h5>
+                            <h5>LE{{ totalCost.toFixed(2) }}</h5>
                         </div>
                     </div>
                     <div class="mt-4 flex justify-between space-x-4">

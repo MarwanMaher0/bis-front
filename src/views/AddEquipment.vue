@@ -63,7 +63,7 @@
                             </div>
                             <div class="flex items-baseline gap-3">
                                 <input type="checkbox" v-model="formData.poPular" id="popular" />
-                                <label for="popular">Add to popular equipment page, commission: $300</label>
+                                <label for="popular">Add to popular equipment page, commission: LE300</label>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

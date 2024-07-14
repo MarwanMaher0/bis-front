@@ -33,7 +33,7 @@
                                 @click="addToCart">
                                 BOOK NOW
                             </button>
-                            <p class="text-2xl text-red-600">${{ machine.priceOfRent }} per day</p>
+                            <p class="text-2xl text-red-600">LE{{ machine.priceOfRent }} per day</p>
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,7 @@
                         <div class="p-4">
                             <p class="text-sm text-gray-600 mb-1">{{ item.machineModel || 'No Machine Model' }}</p>
                             <h5 class="text-lg font-semibold mb-2">{{ item.machineName }}</h5>
-                            <p class="text-gray-800 font-bold">${{ item.priceOfRent }} per day</p>
+                            <p class="text-gray-800 font-bold">LE{{ item.priceOfRent }} per day</p>
                         </div>
                     </router-link>
                 </div>
