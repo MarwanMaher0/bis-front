@@ -9,7 +9,6 @@
                         <img :src="machine.imageUrl" class="machine-image" alt="Machine Image" />
                         <div class="machine-details">
                             <div class="machine-name">{{ machine.machineName }}</div>
-                            <div class="machine-id">{{ machine.machineId }}</div>
                             <div class="machine-owner">{{ machine.startDate }}/{{ machine.endDate }}</div>
                         </div>
                     </div>
