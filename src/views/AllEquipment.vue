@@ -3,7 +3,9 @@
         <div>
             <!-- Equipment Items -->
             <div class="grid grid-cols-3 gap-10">
-                <div v-for="item in equipment" :key="item.id" class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div v-for="item in equipment" :key="item.id"
+                    class="bg-white rounded-lg shadow-none overflow-hidden transition-transform duration-300 hover:shadow-lg hover:scale-105">
+
                     <router-link :to="{ name: 'Description', params: { id: item.id } }">
                         <img :src="item.imageUrl" :alt="item.machineName" class="h-48 w-full object-cover" />
                         <div class="p-4">
