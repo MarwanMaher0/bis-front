@@ -1,15 +1,19 @@
 <template>
-    <div class="container pt-2 mt-24">
+    <div class=" pt-2 mt-24">
         <div class="flex">
             <EquipmentSideBar class="p-4 pt-8" />
             <div class="w-3/4 p-10 min-h-screen bg-white">
-                <div class="containe">
-                    <div class="header rounded-xl">MACHIENS RENTED</div>
-                    <div v-for="machine in rentedMachines" :key="machine.machineId" class="machine">
-                        <img :src="machine.imageUrl" class="machine-image" alt="Machine Image" />
+                <div class="container">
+                    <div class="header rounded-xl bg-yellow-400 text-black font-bold text-2xl flex items-center p-5">
+                        MACHINES RENTED
+                    </div>
+                    <div v-for="machine in rentedMachines" :key="machine.machineId"
+                        class="machine flex bg-white p-4 mb-4 border-b border-gray-300">
+                        <img :src="machine.imageUrl" class="machine-image w-24 h-20 mr-4" alt="Machine Image" />
                         <div class="machine-details">
-                            <div class="machine-name">{{ machine.machineName }}</div>
-                            <div class="machine-owner">{{ machine.startDate }}/{{ machine.endDate }}</div>
+                            <div class="machine-name text-xl font-bold text-yellow-500">{{ machine.machineName }}</div>
+                            <div class="machine-owner text-gray-600">{{ machine.startDate }} / {{ machine.endDate }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -47,26 +51,18 @@ onMounted(fetchRentedMachines);
 </script>
 
 <style scoped>
-@import url('@/assets/AddEquipment.css');
-</style>
-
-<style>
 .header {
     margin-left: 200px;
     text-align: left;
     height: 100px;
     display: flex;
-    font-size: 24px;
-    font-weight: bold;
     align-items: center;
-    color: black;
-    background-color: #f9c262;
     padding-left: 5px;
     width: 700px;
 }
 
-.containe {
-    padding-bottom: 0%;
+.container {
+    padding-bottom: 0;
     width: fit-content;
     height: fit-content;
     padding: 20px;
@@ -76,10 +72,6 @@ onMounted(fetchRentedMachines);
 
 .machine {
     margin-left: 200px;
-    background-color: white;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ccc;
     width: 700px;
 }
 
